@@ -117,28 +117,67 @@ python3 -m http.server 8000
 # then visit http://localhost:8000
 ```
 
-## Deploy
+## Deploy to GitHub Pages + knightwebstudio.com
 
-Any static host works. Three easy options:
+The repo is already configured for this: the `CNAME` file names the domain, and
+`index.html`, `sitemap.xml` and `robots.txt` all point at `knightwebstudio.com`.
+Two steps remain, and only the first needs the GitHub UI.
 
-**GitHub Pages** — Settings → Pages → Source: *Deploy from a branch* → pick your
-branch and `/ (root)`. Live in about a minute at
-`https://<username>.github.io/<repo>/`.
+### Step 1 — turn Pages on
 
-**Netlify** — drag the folder onto [app.netlify.com/drop](https://app.netlify.com/drop),
-or connect the repo. No build command, publish directory `.`.
+Repo **Settings → Pages → Source: "Deploy from a branch"** → branch `main`,
+folder `/ (root)` → **Save**.
 
-**Cloudflare Pages / Vercel** — connect the repo, leave the build settings empty.
+Because `CNAME` is committed, GitHub reads `knightwebstudio.com` from it and
+fills in the Custom domain field automatically. Nothing to type.
 
-Then point your own domain at it in the host's dashboard, and update the URLs in
-`sitemap.xml`, `robots.txt` and the `<head>` of `index.html`.
+### Step 2 — add the DNS records at IONOS
+
+In IONOS: **Domains & SSL → knightwebstudio.com → DNS**. Delete any existing
+A records or IONOS parking records for `@` first, then add:
+
+**Four A records**, host `@`:
+
+| Type | Host | Points to |
+| --- | --- | --- |
+| A | `@` | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+
+**One CNAME record**, host `www`:
+
+| Type | Host | Points to |
+| --- | --- | --- |
+| CNAME | `www` | `knight8280-dotcom.github.io` |
+
+The CNAME target is the *user* domain — no repository name, no `https://`, no
+trailing slash. That is the single most common mistake.
+
+Optionally add four AAAA records on `@` for IPv6: `2606:50c0:8000::153`,
+`2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`.
+
+### Step 3 — enforce HTTPS
+
+Once DNS propagates (30 minutes to a few hours), return to Settings → Pages and
+tick **Enforce HTTPS**. The certificate is issued automatically and free.
+
+**Do not use IONOS "Domain Forwarding"/redirect.** It appears to be the simpler
+option and it breaks both HTTPS and search rankings. Use the DNS records above.
+
+### Other hosts
+
+Netlify, Cloudflare Pages and Vercel all work too — connect the repo with an
+empty build command and publish directory `.`, then follow that host's own DNS
+instructions instead of the records above.
 
 ## Before you launch — checklist
 
-- [ ] Business name, email and phone replaced everywhere
+- [ ] Email and phone replaced everywhere (still `hello@example.com` / `+1 555…`)
 - [ ] Form endpoint configured and a test enquiry received
 - [ ] Real projects, prices and testimonials in place
-- [ ] `https://example.com/` replaced in `index.html`, `sitemap.xml`, `robots.txt`
+- [x] Domain wired through `CNAME`, `index.html`, `sitemap.xml`, `robots.txt`
+- [ ] GitHub Pages enabled and IONOS DNS records added
 - [ ] Social preview image added
 - [ ] Checked on a real phone
 - [ ] Google Search Console set up and sitemap submitted
