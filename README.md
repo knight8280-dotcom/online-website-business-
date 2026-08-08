@@ -9,13 +9,11 @@ npm install**. Open `index.html` and it works.
 | Section | Purpose |
 | --- | --- |
 | Hero | Headline, positioning, two calls to action, CSS-drawn browser mockup |
-| Stats | Animated credibility numbers |
 | Services | Six service cards (design, e-commerce, SEO, care, redesigns, branding) |
-| Work | Six case-study cards with a results line — the part that sells |
+| Work | Three real, live projects with screenshots and links out |
 | Process | Four-step "no surprises" explainer |
-| Pricing | Three tiers with a highlighted recommended plan |
-| Testimonials | Three client quotes |
-| FAQ | Seven accordion answers to the objections that stall a sale |
+| Pricing | Three tiers, plus a $200/month care-plan panel |
+| FAQ | Eight accordion answers to the objections that stall a sale |
 | Contact | Validated enquiry form with spam honeypot |
 | Footer | Navigation, contact details, social links |
 
@@ -31,6 +29,7 @@ index.html              All page content
 404.html                Not-found page
 assets/css/styles.css   All styling (design tokens at the top)
 assets/js/main.js       Theme, nav, reveals, form handling
+assets/img/             Project screenshots (work-*.jpg)
 robots.txt              Search engine directives
 sitemap.xml             Sitemap for search engines
 .nojekyll               Tells GitHub Pages to serve the files as-is
@@ -47,13 +46,16 @@ logo splits it into two parts — search for `brand-name` and edit both.
 
 ### 2. Contact details
 
-Replace these placeholders everywhere they appear in `index.html` **and** in
-`assets/js/main.js` (the email is used in the form's fallback message):
+The site lists `hello@knightwebstudio.com`, in `index.html` (contact list,
+footer, JSON-LD) and in `assets/js/main.js` (the form's fallback message).
+**That mailbox does not exist yet** — create it at IONOS, which is free with the
+domain, or change the address in those two files.
 
-- `hello@example.com`
-- `+1 (555) 000-0000` and `+15550000000` (the `tel:` link)
-- `https://example.com/` in the `canonical`, Open Graph and JSON-LD blocks
-- The `href="#"` values on the three footer social links
+There is deliberately no phone number: the placeholder `555` one was removed
+rather than shipped. To add a real one, put it back in the contact list and
+footer, and add `"telephone"` to the JSON-LD block.
+
+Still to replace: the `href="#"` values on the three footer social links.
 
 ### 3. Make the contact form actually send email
 
@@ -76,31 +78,39 @@ Open `assets/css/styles.css` and edit the four brand variables at the top:
 --brand:        #6d8bff;   /* primary */
 --brand-strong: #4f6ef7;   /* gradient end, hover states */
 --brand-soft:   #a5b8ff;   /* eyebrow text, icons */
---accent:       #46e0c0;   /* ticks, highlights, stats */
+--accent:       #46e0c0;   /* ticks, prices, result lines */
 ```
 
 The light theme has its own overrides in the `[data-theme="light"]` block just
-below.
+below. `--brand-soft` and `--accent` are deliberately *darker* there: their dark
+theme values fail contrast on a light background. If you change one, change both
+and re-check.
 
-### 5. Your real work and prices
+### 5. Your work
 
-The first project card is **Corbel Books** (corbelbooks.com) — a real, live
-project, marked `Featured`, with a link out to the site. It's described
-factually rather than with invented metrics, since it's a site you actually own.
+The Work section holds three real, live projects, each with a screenshot taken
+from the site itself, a `Live` badge and a link out:
 
-The other five project cards, the three testimonials and the three price tiers
-are realistic placeholders. Swap them for real ones before launch — the results
-line on each card (`↑ 210% online orders`) is the single most persuasive element
-on the page, so make those true and specific. If you don't have five more
-projects yet, delete the extra cards; three real ones beat six half-invented
-ones.
+| Project | Image source |
+| --- | --- |
+| Corbel Books | its own Open Graph card |
+| Smilys Softwash | its own before/after roof photo |
+| GamersPulseHQ | its own Open Graph card |
 
-To use real screenshots instead of the coloured gradient thumbnails, replace
-the `<div class="work-thumb thumb-a">` element with an image:
+Images live in `assets/img/work-*.jpg`, all 1200px wide and under 90 KB. To add
+a fourth project, copy one `<article class="work-card">` block in `index.html`,
+drop a matching image in `assets/img/`, and update the text. The grid reflows on
+its own.
 
-```html
-<img class="work-thumb" src="assets/img/bloom-vine.jpg" alt="Bloom & Vine homepage" loading="lazy" width="800" height="500">
-```
+All descriptions are factual — taken from each site's own copy — with no
+invented metrics. Keep it that way: a result line you can't defend is worse than
+no result line.
+
+### 5b. Prices are still mine, not yours
+
+The three project tiers (`$1,500` / `$4,000` / `$8,000`) are my suggested
+starting points, not numbers you've confirmed. The `$200/month` care plan is
+the one figure you set. Review the tiers before you send anyone here.
 
 ### 6. Social preview image
 
@@ -173,9 +183,10 @@ instructions instead of the records above.
 
 ## Before you launch — checklist
 
-- [ ] Email and phone replaced everywhere (still `hello@example.com` / `+1 555…`)
+- [ ] Create the `hello@knightwebstudio.com` mailbox (free with the IONOS domain)
+- [ ] Confirm the three project price tiers
+- [ ] Add a phone number, or leave it off — the fake one was removed
 - [ ] Form endpoint configured and a test enquiry received
-- [ ] Real projects, prices and testimonials in place
 - [x] Domain wired through `CNAME`, `index.html`, `sitemap.xml`, `robots.txt`
 - [ ] GitHub Pages enabled and IONOS DNS records added
 - [ ] Social preview image added
