@@ -47,7 +47,11 @@
 
   --brand:        #3f5bd9;
   --brand-strong: #2c46c4;
-  --brand-soft:   #7d93f0;
+  /* brand-soft and accent carry small text (eyebrows, ticks, prices, result
+     lines). Their dark-theme values sit at 2.9:1 and 1.7:1 on a light ground,
+     so both are deepened here to clear 4.5:1. */
+  --brand-soft:   #4a5fd4;
+  --accent:       #0f766e;
 
   --shadow-sm: 0 1px 2px rgba(16,24,40,.06);
   --shadow-md: 0 10px 26px rgba(16,24,40,.08);
@@ -91,7 +95,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 .skip-link {
   position: absolute; left: 12px; top: -60px; z-index: 200;
-  background: var(--brand); color: #fff;
+  /* Inverted from the body tokens so it clears contrast in both themes —
+     white on --brand is only 3.1:1 in dark. */
+  background: var(--text); color: var(--bg);
   padding: .7rem 1.1rem; border-radius: 0 0 10px 10px;
   transition: top .2s var(--ease);
 }
@@ -441,8 +447,33 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .price-from { font-size: .85rem; font-weight: 500; color: var(--muted); letter-spacing: 0; }
 .price-note { color: var(--muted); font-size: .93rem; }
 .price-card .ticks { flex: 1; margin-bottom: 1.6rem; }
-.pricing-foot { text-align: center; color: var(--muted); margin: 34px 0 0; font-size: .96rem; }
+.pricing-foot { text-align: center; color: var(--muted); margin: 26px 0 0; font-size: .93rem; }
 .pricing-foot strong { color: var(--text); }
+
+/* Care plan — recurring revenue, given its own panel rather than a footnote */
+.care-panel {
+  display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(24px, 4vw, 48px);
+  align-items: center; margin-top: 40px; padding: clamp(26px, 4vw, 40px);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border));
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(90% 130% at 100% 0%, color-mix(in srgb, var(--accent) 11%, transparent), transparent 62%),
+    var(--surface);
+}
+.care-copy h3 { font-size: clamp(1.35rem, 2.4vw, 1.75rem); margin-bottom: .6rem; }
+.care-price { color: var(--accent); font-size: 1.28em; letter-spacing: -.03em; }
+.care-per { color: var(--muted); font-weight: 500; font-size: .62em; }
+.care-copy p { color: var(--muted); font-size: .97rem; margin-bottom: 1.4rem; }
+.care-list { margin-top: 0; font-size: .94rem; }
+
+/* Price tag beside a service card heading */
+.card-price {
+  display: inline-block; margin-left: .4rem; vertical-align: middle;
+  padding: .12rem .55rem; border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 9%, transparent);
+  color: var(--accent); font-size: .68rem; font-weight: 700;
+  letter-spacing: .03em; white-space: nowrap;
+}
 
 /* ---------- Testimonials ---------- */
 .quote {
@@ -499,7 +530,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .field { display: grid; gap: .4rem; margin-bottom: 1.1rem; border: 0; padding: 0; min-width: 0; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
 .field label, .field legend { font-size: .88rem; font-weight: 600; padding: 0; }
-.field label span, .field legend span { color: var(--brand-soft); }
+/* Scoped to the direct label/legend only — a bare `.field label span` also
+   matched `.chip span`, tinting the service chips an unreadable pale blue. */
+.field > label > span, .field > legend > span { color: var(--brand-soft); }
 
 input[type="text"], input[type="email"], select, textarea {
   width: 100%; padding: .78rem .95rem;
@@ -590,6 +623,7 @@ button[disabled] { opacity: .6; cursor: not-allowed; transform: none !important;
   .steps { grid-template-columns: repeat(2, 1fr); }
   .step:not(:last-child)::after { display: none; }
   .contact-wrap { grid-template-columns: 1fr; }
+  .care-panel { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 26px; }
 
