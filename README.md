@@ -12,7 +12,7 @@ npm install**. Open `index.html` and it works.
 | Services | Six service cards (design, e-commerce, SEO, care, redesigns, branding) |
 | Work | Three real, live projects with screenshots and links out |
 | Process | Four-step "no surprises" explainer |
-| Pricing | Three tiers, plus a $200/month care-plan panel |
+| Pricing | Three project tiers, automation add-ons, three care tiers |
 | FAQ | Eight accordion answers to the objections that stall a sale |
 | Contact | Validated enquiry form with spam honeypot |
 | Footer | Navigation, contact details, social links |
@@ -106,11 +106,23 @@ All descriptions are factual — taken from each site's own copy — with no
 invented metrics. Keep it that way: a result line you can't defend is worse than
 no result line.
 
-### 5b. Prices are still mine, not yours
+### 5b. Pricing
 
-The three project tiers (`$1,500` / `$4,000` / `$8,000`) are my suggested
-starting points, not numbers you've confirmed. The `$200/month` care plan is
-the one figure you set. Review the tiers before you send anyone here.
+Current prices, set against 2026 market research:
+
+| Item | Price | Market position |
+| --- | --- | --- |
+| Starter | from $2,000 | Freelancers charge $300–$3,500 *per page* |
+| Business | from $4,000 | Most professional builds land $3,000–$15,000 |
+| Commerce | from $8,000 | Configured store builds run $3,000–$10,000 |
+| Automation add-ons | from $750 | Booking/CRM integration runs $500–$3,000 |
+| Care — Essential | $200/mo | Quality care plans band at $199–$599/mo |
+| Care — Growth | $350/mo | |
+| Care — Commerce | $600/mo | |
+
+Starter was raised from $1,500 because three pages for $1,500 undercut what
+freelancers charge for one. Each price appears once in `index.html`; the care
+figures also appear in the FAQ answer about care plans.
 
 ### 6. Social preview image
 
@@ -184,7 +196,6 @@ instructions instead of the records above.
 ## Before you launch — checklist
 
 - [ ] Create the `hello@knightwebstudio.com` mailbox (free with the IONOS domain)
-- [ ] Confirm the three project price tiers
 - [ ] Add a phone number, or leave it off — the fake one was removed
 - [ ] Form endpoint configured and a test enquiry received
 - [x] Domain wired through `CNAME`, `index.html`, `sitemap.xml`, `robots.txt`
