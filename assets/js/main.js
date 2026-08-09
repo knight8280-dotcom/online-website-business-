@@ -115,36 +115,6 @@
     revealables.forEach(function (el) { revealObserver.observe(el); });
   }
 
-  /* ---------- Count-up stats ---------- */
-  var counters = document.querySelectorAll('[data-count]');
-
-  function countUp(el) {
-    var target = parseFloat(el.getAttribute('data-count'));
-    var suffix = el.getAttribute('data-suffix') || '';
-    var duration = 1300;
-    var start = null;
-
-    function frame(now) {
-      if (start === null) start = now;
-      var progress = Math.min((now - start) / duration, 1);
-      var eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(target * eased) + suffix;
-      if (progress < 1) window.requestAnimationFrame(frame);
-    }
-    window.requestAnimationFrame(frame);
-  }
-
-  if (!reduceMotion && 'IntersectionObserver' in window) {
-    var counterObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        countUp(entry.target);
-        counterObserver.unobserve(entry.target);
-      });
-    }, { threshold: 0.6 });
-    counters.forEach(function (el) { counterObserver.observe(el); });
-  }
-
   /* ---------- Contact form: validation + async submit ---------- */
   var form = document.getElementById('contact-form');
 
@@ -211,7 +181,7 @@
       // Endpoint not configured yet — fall back to opening the visitor's
       // email client so no enquiry is ever silently lost.
       if (form.action.indexOf('YOUR_FORM_ID') !== -1) {
-        setStatus('Form endpoint not configured — see README.md. Opening your email app instead…', 'error');
+        setStatus('Opening your email app so you can send this straight to us…');
         // `form.elements` — `form.name` would resolve to the form's own name attribute.
         var f = form.elements;
         var subject = encodeURIComponent('Website enquiry from ' + f.name.value.trim());
@@ -222,7 +192,7 @@
           'Budget: ' + f.budget.value + '\n\n' +
           f.message.value.trim()
         );
-        window.location.href = 'mailto:hello@example.com?subject=' + subject + '&body=' + body;
+        window.location.href = 'mailto:knightwebsitesllc@gmail.com?subject=' + subject + '&body=' + body;
         return;
       }
 
@@ -241,7 +211,7 @@
           setStatus('Thanks — your enquiry is in. We’ll reply within one business day.', 'ok');
         })
         .catch(function () {
-          setStatus('Something went wrong. Please email hello@example.com directly.', 'error');
+          setStatus('Something went wrong. Please email knightwebsitesllc@gmail.com directly.', 'error');
         })
         .finally(function () {
           submitBtn.disabled = false;
