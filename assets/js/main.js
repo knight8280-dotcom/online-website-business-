@@ -181,7 +181,7 @@
       // Endpoint not configured yet — fall back to opening the visitor's
       // email client so no enquiry is ever silently lost.
       if (form.action.indexOf('YOUR_FORM_ID') !== -1) {
-        setStatus('Form endpoint not configured — see README.md. Opening your email app instead…', 'error');
+        setStatus('Opening your email app so you can send this straight to us…');
         // `form.elements` — `form.name` would resolve to the form's own name attribute.
         var f = form.elements;
         var subject = encodeURIComponent('Website enquiry from ' + f.name.value.trim());
@@ -192,7 +192,7 @@
           'Budget: ' + f.budget.value + '\n\n' +
           f.message.value.trim()
         );
-        window.location.href = 'mailto:hello@knightwebstudio.com?subject=' + subject + '&body=' + body;
+        window.location.href = 'mailto:knightwebsitesllc@gmail.com?subject=' + subject + '&body=' + body;
         return;
       }
 
@@ -211,7 +211,7 @@
           setStatus('Thanks — your enquiry is in. We’ll reply within one business day.', 'ok');
         })
         .catch(function () {
-          setStatus('Something went wrong. Please email hello@knightwebstudio.com directly.', 'error');
+          setStatus('Something went wrong. Please email knightwebsitesllc@gmail.com directly.', 'error');
         })
         .finally(function () {
           submitBtn.disabled = false;

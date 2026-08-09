@@ -46,10 +46,10 @@ logo splits it into two parts — search for `brand-name` and edit both.
 
 ### 2. Contact details
 
-The site lists `hello@knightwebstudio.com`, in `index.html` (contact list,
-footer, JSON-LD) and in `assets/js/main.js` (the form's fallback message).
-**That mailbox does not exist yet** — create it at IONOS, which is free with the
-domain, or change the address in those two files.
+The contact address is `knightwebsitesllc@gmail.com`. It appears in
+`index.html` (contact list, footer, JSON-LD) and in `assets/js/main.js` (the
+form's mailto fallback and its error message) — change it in both files if it
+ever moves.
 
 There is deliberately no phone number: the placeholder `555` one was removed
 rather than shipped. To add a real one, put it back in the contact list and
@@ -195,7 +195,6 @@ instructions instead of the records above.
 
 ## Before you launch — checklist
 
-- [ ] Create the `hello@knightwebstudio.com` mailbox (free with the IONOS domain)
 - [ ] Add a phone number, or leave it off — the fake one was removed
 - [ ] Form endpoint configured and a test enquiry received
 - [x] Domain wired through `CNAME`, `index.html`, `sitemap.xml`, `robots.txt`
