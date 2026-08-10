@@ -219,14 +219,19 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 .header-inner { display: flex; align-items: center; gap: 20px; height: 72px; }
 
-.brand { display: inline-flex; align-items: center; gap: .6rem; font-weight: 700; font-size: 1.12rem; letter-spacing: -.02em; }
-.brand-mark {
-  display: grid; place-items: center;
-  width: 28px; height: 28px; border-radius: 7px;
-  background: var(--brand); color: var(--on-brand);
-  font-size: .82rem; font-weight: 700; letter-spacing: 0;
+.brand {
+  display: inline-flex; align-items: center; gap: .55rem;
+  font-family: var(--font-display);
+  font-weight: 650; font-size: 1.06rem; letter-spacing: -.025em;
 }
-.brand-accent { color: var(--muted); font-weight: 600; }
+/* Shield mark — theme-aware, so it inverts correctly in light and dark */
+.brand-mark { width: 28px; height: 28px; flex: none; display: block; }
+.mark-shield { fill: var(--brand); }
+.mark-k {
+  fill: none; stroke: var(--on-brand); stroke-width: 2.7;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.brand-name { white-space: nowrap; }
 
 /* --- Navigation ---------------------------------------------------------
    One markup source for both breakpoints: a horizontal bar with a sliding

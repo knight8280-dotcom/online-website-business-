@@ -39,11 +39,21 @@ sitemap.xml             Sitemap for search engines
 
 Everything you need to change is marked `EDIT ME` in the source.
 
-### 1. Business name
+### 1. Business name and logo
 
-Find-and-replace `Knight Web Studio` in `index.html`. The header and footer
-wordmark reads `KnightWebStudio` and is split across two spans so the second
-half can be tinted — search for `brand-name` and edit both occurrences.
+The wordmark reads **Knight Web Studio** in full, in one weight and one colour,
+in the header and footer — search for `brand-name` and edit both occurrences.
+
+The logo is a shield containing a K: *knight* for the name, and protection for
+the care plans. It lives in three places:
+
+- inline SVG in the header and footer, themed through `--brand` (shield) and
+  `--on-brand` (the K), so it inverts correctly in light and dark
+- `assets/img/logo.svg` — standalone, used for the favicon and Apple touch icon
+- baked into `assets/img/og-image.png`
+
+It stays legible down to 16px. If you change `--brand`, the inline mark follows
+automatically, but `logo.svg` has its colours hard-coded and needs editing.
 
 ### 2. Contact details
 
@@ -169,8 +179,10 @@ figures also appear in the FAQ answer about care plans.
 
 ### 6. Social preview image
 
-Create a 1200×630px image at `assets/img/og-image.png` — that's what shows up
-when someone shares your link on LinkedIn, WhatsApp or Slack.
+`assets/img/og-image.png` (1200×630) is what appears when someone shares your
+link on LinkedIn, WhatsApp or Slack. It carries the logo, the headline and the
+domain. To regenerate it after a copy or brand change, rebuild it from the same
+markup used to produce it and re-export at 1200×630.
 
 ## Run it locally
 
@@ -242,7 +254,7 @@ instructions instead of the records above.
 - [ ] Form endpoint configured and a test enquiry received
 - [x] Domain wired through `CNAME`, `index.html`, `sitemap.xml`, `robots.txt`
 - [ ] GitHub Pages enabled and IONOS DNS records added
-- [ ] Social preview image added
+- [x] Social preview image added
 - [ ] Checked on a real phone
 - [ ] Google Search Console set up and sitemap submitted
 - [ ] Analytics added (Plausible or Fathom if you'd rather skip a cookie banner)
