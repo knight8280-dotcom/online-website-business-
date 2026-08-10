@@ -71,6 +71,7 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 90px;
   -webkit-text-size-adjust: 100%;
+  overscroll-behavior-x: none;   /* no horizontal rubber-banding */
 }
 
 body {
@@ -81,7 +82,8 @@ body {
   color: var(--text);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  overflow-x: hidden;   /* fallback for browsers without `clip` */
+  overflow-x: clip;
 }
 
 img, svg { max-width: 100%; }
@@ -218,7 +220,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .hero { position: relative; padding: clamp(52px, 7vw, 88px) 0 clamp(48px, 6vw, 72px); overflow: hidden; }
 
 .hero-glow {
-  position: absolute; inset: -30% -10% auto -10%; height: 620px; z-index: -1;
+  position: absolute; inset: -30% 0 auto 0; height: 620px; z-index: -1;
   background:
     radial-gradient(46% 50% at 18% 28%, color-mix(in srgb, var(--brand) 12%, transparent), transparent 70%);
   filter: blur(18px);
@@ -554,7 +556,11 @@ input.invalid, textarea.invalid { border-color: #ef5c6e; }
 }
 .chip input:focus-visible + span { outline: 2px solid var(--brand); outline-offset: 2px; }
 
-.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.hp {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; border: 0; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
 
 .form-status { margin: .9rem 0 0; font-size: .9rem; text-align: center; }
 .form-status.ok    { color: var(--accent); }
@@ -626,8 +632,11 @@ button[disabled] { opacity: .6; cursor: not-allowed; transform: none !important;
   }
   .nav.open { transform: none; opacity: 1; visibility: visible; }
   .nav a { padding: .85rem .6rem; font-size: 1rem; border-radius: 10px; }
+  .site-header { backdrop-filter: blur(8px); }
   .nav-toggle { display: grid; }
   .header-cta { display: none; }
+  /* .nav is fixed here, so its auto margin no longer pushes these right */
+  .header-actions { margin-left: auto; }
 }
 
 @media (max-width: 620px) {
