@@ -23,6 +23,9 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#9670;</text></svg>">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preload" href="assets/fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/styles.css">
 
 <!-- Structured data helps Google show your business properly in search results -->
@@ -46,6 +49,7 @@
 
 <!-- ===================== HEADER ===================== -->
 <header class="site-header" id="site-header">
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
   <div class="container header-inner">
     <a class="brand" href="#top" aria-label="Knight Web Studio home">
       <span class="brand-mark" aria-hidden="true">K</span>
@@ -53,11 +57,22 @@
     </a>
 
     <nav class="nav" id="nav" aria-label="Main">
-      <a href="#services">Services</a>
-      <a href="#work">Work</a>
-      <a href="#process">Process</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#faq">FAQ</a>
+      <div class="nav-inner">
+        <ul class="nav-links">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+        <span class="nav-indicator" aria-hidden="true"></span>
+
+        <!-- Overlay-only footer: on desktop this is hidden -->
+        <div class="nav-foot">
+          <a class="btn btn-primary btn-block" href="#contact">Start your project</a>
+          <a class="nav-mail" href="mailto:knightwebsitesllc@gmail.com">knightwebsitesllc@gmail.com</a>
+        </div>
+      </div>
     </nav>
 
     <div class="header-actions">
@@ -234,9 +249,11 @@
       <div class="grid grid-3 work-grid">
         <article class="work-card reveal">
           <span class="work-flag">Live</span>
-          <img class="work-thumb" src="assets/img/work-corbelbooks.jpg"
+          <div class="work-media">
+            <img class="work-thumb" src="assets/img/work-corbelbooks.jpg"
                alt="Corbel Books homepage — bookkeeping and invoicing for small businesses"
                width="1200" height="630" loading="lazy" decoding="async">
+          </div>
           <div class="work-body">
             <p class="work-tag">Fintech SaaS · Product site &amp; app UI</p>
             <h3>Corbel Books</h3>
@@ -255,9 +272,11 @@
 
         <article class="work-card reveal">
           <span class="work-flag">Live</span>
-          <img class="work-thumb" src="assets/img/work-smilyssoftwash.jpg"
+          <div class="work-media">
+            <img class="work-thumb" src="assets/img/work-smilyssoftwash.jpg"
                alt="Smilys Softwash — before and after of a soft-washed roof and house exterior"
                width="1200" height="600" loading="lazy" decoding="async">
+          </div>
           <div class="work-body">
             <p class="work-tag">Exterior cleaning · Local service &amp; SEO</p>
             <h3>Smilys Softwash</h3>
@@ -276,9 +295,11 @@
 
         <article class="work-card reveal">
           <span class="work-flag">Live</span>
-          <img class="work-thumb" src="assets/img/work-gamerspulsehq.jpg"
+          <div class="work-media">
+            <img class="work-thumb" src="assets/img/work-gamerspulsehq.jpg"
                alt="GamersPulseHQ — real-time gaming intelligence platform"
                width="1200" height="630" loading="lazy" decoding="async">
+          </div>
           <div class="work-body">
             <p class="work-tag">Gaming data · Web app</p>
             <h3>GamersPulseHQ</h3>
