@@ -193,6 +193,17 @@
         return;
       }
 
+      // hCaptcha injects h-captcha-response into the form once solved. Web3Forms
+      // verifies it server-side too; this check just avoids a wasted round trip.
+      var captchaEl = document.getElementById('captcha-error');
+      var captchaField = form.elements['h-captcha-response'];
+      if (captchaField && !captchaField.value) {
+        if (captchaEl) captchaEl.textContent = 'Please confirm you are human.';
+        setStatus('');
+        return;
+      }
+      if (captchaEl) captchaEl.textContent = '';
+
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending…';
       setStatus('');
@@ -223,6 +234,8 @@
         .finally(function () {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Send enquiry';
+          // Tokens are single-use — without this a second send always fails.
+          if (window.hcaptcha) { try { window.hcaptcha.reset(); } catch (e) { /* not rendered */ } }
         });
     });
   }

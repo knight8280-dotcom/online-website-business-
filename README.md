@@ -72,8 +72,22 @@ to `knightwebsitesllc@gmail.com`. Three hidden inputs configure it in
 The access key is **public by design** — it sits in the page source, which is
 how a static site receives mail without a server. It is not a credential.
 
-A `botcheck` checkbox acts as a honeypot: it is hidden from people, and
-Web3Forms discards any submission where it is set.
+**Spam protection**, in three layers:
+
+1. A `botcheck` honeypot checkbox — hidden from people, and Web3Forms discards
+   any submission where it is set.
+2. Web3Forms' own server-side spam checks, on by default.
+3. **hCaptcha**, using Web3Forms' shared zero-config sitekey
+   (`50b2fe65-b00b-4b9e-ad62-3ba471098be2`) — no account or keys needed.
+
+> **hCaptcha must also be switched on in the Web3Forms dashboard.** The widget
+> on the page stops casual bots, but only the dashboard setting makes the
+> server *reject* submissions without a valid token. Without it, a bot posting
+> straight to the API still gets through.
+
+If hCaptcha's script fails to load, the form still submits rather than trapping
+a real prospect behind a broken widget — the server-side check remains the
+authority.
 
 **If the POST fails for any reason** — bad key, network drop, service outage —
 `assets/js/main.js` opens the visitor's email client with the enquiry
