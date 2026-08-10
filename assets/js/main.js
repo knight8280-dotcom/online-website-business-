@@ -161,6 +161,47 @@
     revealables.forEach(function (el) { revealObserver.observe(el); });
   }
 
+  /* ---------- hCaptcha, loaded on demand ----------
+     Loading it with the page put a third-party iframe in the contact section
+     before anyone asked for it, and captcha iframes can take focus on init,
+     which drags the scroll position down the page. Fetching it only once the
+     form is nearly in view keeps the widget ready without that cost. */
+  var captchaSlot = document.getElementById('hcaptcha-slot');
+  var captchaRequested = false;
+
+  function loadCaptcha() {
+    if (captchaRequested || !captchaSlot) return;
+    captchaRequested = true;
+    var sc = document.createElement('script');
+    sc.src = 'https://js.hcaptcha.com/1/api.js?render=explicit&onload=kwsCaptchaReady';
+    sc.async = true; sc.defer = true;
+    document.head.appendChild(sc);
+  }
+
+  // Global callback the hCaptcha script invokes once it is parsed
+  window.kwsCaptchaReady = function () {
+    if (!window.hcaptcha || !captchaSlot || captchaSlot.dataset.rendered) return;
+    captchaSlot.dataset.rendered = '1';
+    window.hcaptcha.render(captchaSlot, { sitekey: captchaSlot.dataset.sitekey });
+  };
+
+  if (captchaSlot) {
+    if ('IntersectionObserver' in window) {
+      var capObs = new IntersectionObserver(function (entries) {
+        if (entries.some(function (e) { return e.isIntersecting; })) {
+          loadCaptcha();
+          capObs.disconnect();
+        }
+      }, { rootMargin: '900px' });   // ready well before the visitor reaches it
+      capObs.observe(captchaSlot);
+    } else {
+      loadCaptcha();
+    }
+    // Belt and braces: any interaction with the form pulls it in immediately
+    var cf = document.getElementById('contact-form');
+    if (cf) cf.addEventListener('focusin', loadCaptcha, { once: true });
+  }
+
   /* ---------- Contact form: validation + async submit ---------- */
   var form = document.getElementById('contact-form');
 
