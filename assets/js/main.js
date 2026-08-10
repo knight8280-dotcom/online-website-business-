@@ -44,34 +44,59 @@
   var navToggle = document.getElementById('nav-toggle');
   var nav = document.getElementById('nav');
 
-  function closeNav() {
+  var navItems = nav ? Array.prototype.slice.call(nav.querySelectorAll('.nav-links li')) : [];
+
+  function setNavOpen(open) {
     if (!nav) return;
-    nav.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', 'false');
-    navToggle.setAttribute('aria-label', 'Open menu');
+    nav.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    // Stop the page scrolling behind the overlay
+    document.body.style.overflow = open ? 'hidden' : '';
+    navItems.forEach(function (li, i) {
+      li.style.transitionDelay = open ? (0.06 + i * 0.045) + 's' : '0s';
+    });
   }
+  function closeNav() { setNavOpen(false); }
 
   if (navToggle && nav) {
     navToggle.addEventListener('click', function () {
-      var open = nav.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', String(open));
-      navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      setNavOpen(!nav.classList.contains('open'));
     });
 
     nav.addEventListener('click', function (e) {
-      if (e.target.tagName === 'A') closeNav();
+      if (e.target.closest('a')) closeNav();
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeNav();
+      if (e.key === 'Escape' && nav.classList.contains('open')) {
+        closeNav();
+        navToggle.focus();
+      }
+    });
+
+    // Leaving the breakpoint with the sheet open would strand the scroll lock
+    window.matchMedia('(min-width: 981px)').addEventListener('change', function (e) {
+      if (e.matches) closeNav();
     });
   }
 
   /* ---------- Header shadow on scroll + active nav link ---------- */
   var header = document.getElementById('site-header');
+  var progress = document.getElementById('scroll-progress');
+  var indicator = document.querySelector('.nav-indicator');
   var sections = Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
-  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
   var ticking = false;
+
+  // Desktop only: glide the pill to whichever link is active
+  function moveIndicator(target) {
+    if (!indicator || window.innerWidth <= 980) return;
+    if (!target) { indicator.classList.remove('on'); return; }
+    indicator.style.width = target.offsetWidth + 'px';
+    indicator.style.transform = 'translateX(' + target.offsetLeft + 'px)';
+    indicator.classList.add('on');
+  }
 
   function onScroll() {
     if (header) header.classList.toggle('scrolled', window.scrollY > 8);
@@ -81,11 +106,32 @@
     for (var i = 0; i < sections.length; i++) {
       if (sections[i].offsetTop <= pos) currentId = sections[i].id;
     }
+    var activeLink = null;
     navLinks.forEach(function (link) {
-      link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
+      var on = link.getAttribute('href') === '#' + currentId;
+      link.classList.toggle('active', on);
+      if (on) activeLink = link;
     });
+    if (!nav || !nav.classList.contains('open')) moveIndicator(activeLink);
+
+    if (progress) {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.transform = 'scaleX(' + (max > 0 ? Math.min(window.scrollY / max, 1) : 0) + ')';
+    }
     ticking = false;
   }
+
+  // Hovering previews where the pill would go; leaving restores the active one
+  navLinks.forEach(function (link) {
+    link.addEventListener('mouseenter', function () { moveIndicator(link); });
+  });
+  var navInner = document.querySelector('.nav-inner');
+  if (navInner) navInner.addEventListener('mouseleave', function () {
+    moveIndicator(document.querySelector('.nav-links a.active'));
+  });
+  window.addEventListener('resize', function () {
+    moveIndicator(document.querySelector('.nav-links a.active'));
+  });
 
   window.addEventListener('scroll', function () {
     if (!ticking) {
