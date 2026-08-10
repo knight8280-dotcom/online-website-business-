@@ -531,12 +531,15 @@
         </div>
 
         <!--
-          EDIT ME: the form posts to the endpoint in `action`.
-          Set up a free Formspree/Getform/Basin account, paste your endpoint URL,
-          and this works immediately on a static host. See README.md.
+          Posts to Web3Forms, which relays to knightwebsitesllc@gmail.com.
+          The access key is public by design — that is how a static site
+          receives mail without a server. See README.md to change it.
         -->
         <form class="contact-form reveal" id="contact-form"
-              action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+              action="https://api.web3forms.com/submit" method="POST" novalidate>
+          <input type="hidden" name="access_key" value="f01c12a0-b7c3-4b4a-bcd9-d46b0703e3b7">
+          <input type="hidden" name="subject" value="New enquiry from knightwebstudio.com">
+          <input type="hidden" name="from_name" value="Knight Web Studio website">
           <div class="field">
             <label for="name">Your name <span aria-hidden="true">*</span></label>
             <input type="text" id="name" name="name" autocomplete="name" required
@@ -588,10 +591,11 @@
             <p class="error" id="message-error" role="alert"></p>
           </div>
 
-          <!-- Honeypot: bots fill this, humans never see it -->
+          <!-- Honeypot: bots tick this, humans never see it. Web3Forms
+               rejects any submission where `botcheck` is set. -->
           <div class="hp" aria-hidden="true">
-            <label for="website-url">Leave this empty</label>
-            <input type="text" id="website-url" name="_gotcha" tabindex="-1" autocomplete="off">
+            <label for="botcheck">Leave this empty</label>
+            <input type="checkbox" id="botcheck" name="botcheck" tabindex="-1" autocomplete="off">
           </div>
 
           <button class="btn btn-primary btn-block" type="submit" id="submit-btn">Send enquiry</button>
