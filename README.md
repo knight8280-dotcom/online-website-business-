@@ -42,7 +42,8 @@ Everything you need to change is marked `EDIT ME` in the source.
 ### 1. Business name
 
 Find-and-replace `Knight Web Studio` in `index.html`. The header and footer
-logo splits it into two parts — search for `brand-name` and edit both.
+wordmark reads `KnightWebStudio` and is split across two spans so the second
+half can be tinted — search for `brand-name` and edit both occurrences.
 
 ### 2. Contact details
 
@@ -79,6 +80,10 @@ how a static site receives mail without a server. It is not a credential.
 2. Web3Forms' own server-side spam checks, on by default.
 3. **hCaptcha**, using Web3Forms' shared zero-config sitekey
    (`50b2fe65-b00b-4b9e-ad62-3ba471098be2`) — no account or keys needed.
+   It is loaded **on demand** (when the contact section nears the viewport, or
+   on first focus in the form), not with the page. A captcha iframe present at
+   load can take focus and drag the scroll position down the page, and it also
+   put a third-party request on the critical path for every visitor.
 
 > **hCaptcha must also be switched on in the Web3Forms dashboard.** The widget
 > on the page stops casual bots, but only the dashboard setting makes the
