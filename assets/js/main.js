@@ -164,6 +164,21 @@
       statusEl.className = 'form-status' + (kind ? ' ' + kind : '');
     }
 
+    // Used when the POST fails, so a broken endpoint never costs an enquiry.
+    // `form.elements` — `form.name` would resolve to the form's own name attribute.
+    function mailtoFallback() {
+      var f = form.elements;
+      var subject = encodeURIComponent('Website enquiry from ' + f.name.value.trim());
+      var body = encodeURIComponent(
+        'Name: ' + f.name.value.trim() + '\n' +
+        'Email: ' + f.email.value.trim() + '\n' +
+        'Business: ' + f.company.value.trim() + '\n' +
+        'Budget: ' + f.budget.value + '\n\n' +
+        f.message.value.trim()
+      );
+      return 'mailto:knightwebsitesllc@gmail.com?subject=' + subject + '&body=' + body;
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -178,24 +193,6 @@
         return;
       }
 
-      // Endpoint not configured yet — fall back to opening the visitor's
-      // email client so no enquiry is ever silently lost.
-      if (form.action.indexOf('YOUR_FORM_ID') !== -1) {
-        setStatus('Opening your email app so you can send this straight to us…');
-        // `form.elements` — `form.name` would resolve to the form's own name attribute.
-        var f = form.elements;
-        var subject = encodeURIComponent('Website enquiry from ' + f.name.value.trim());
-        var body = encodeURIComponent(
-          'Name: ' + f.name.value.trim() + '\n' +
-          'Email: ' + f.email.value.trim() + '\n' +
-          'Business: ' + f.company.value.trim() + '\n' +
-          'Budget: ' + f.budget.value + '\n\n' +
-          f.message.value.trim()
-        );
-        window.location.href = 'mailto:knightwebsitesllc@gmail.com?subject=' + subject + '&body=' + body;
-        return;
-      }
-
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending…';
       setStatus('');
@@ -206,12 +203,22 @@
         headers: { Accept: 'application/json' }
       })
         .then(function (response) {
-          if (!response.ok) throw new Error('Request failed with status ' + response.status);
-          form.reset();
-          setStatus('Thanks — your enquiry is in. We’ll reply within one business day.', 'ok');
+          // Web3Forms reports rejections (bad key, spam heuristics) inside a
+          // 200 body, so response.ok alone is not proof the mail was sent.
+          return response.json()
+            .catch(function () { return { success: response.ok }; })
+            .then(function (data) {
+              if (!response.ok || data.success === false) {
+                throw new Error(data.message || 'Request failed with status ' + response.status);
+              }
+              form.reset();
+              setStatus('Thanks — your enquiry is in. We’ll reply within one business day.', 'ok');
+            });
         })
         .catch(function () {
-          setStatus('Something went wrong. Please email knightwebsitesllc@gmail.com directly.', 'error');
+          // Never lose an enquiry: hand the visitor a pre-filled email instead.
+          setStatus('Couldn’t send that. Opening your email app so nothing is lost…', 'error');
+          window.location.href = mailtoFallback();
         })
         .finally(function () {
           submitBtn.disabled = false;

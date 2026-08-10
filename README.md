@@ -8,7 +8,7 @@ npm install**. Open `index.html` and it works.
 
 | Section | Purpose |
 | --- | --- |
-| Hero | Headline, positioning, two calls to action, CSS-drawn browser mockup |
+| Hero | Headline, two calls to action, and a Live work panel of real projects |
 | Services | Six service cards (design, e-commerce, SEO, care, redesigns, branding) |
 | Work | Three real, live projects with screenshots and links out |
 | Process | Four-step "no surprises" explainer |
@@ -57,18 +57,35 @@ footer, and add `"telephone"` to the JSON-LD block.
 
 Still to replace: the `href="#"` values on the three footer social links.
 
-### 3. Make the contact form actually send email
+### 3. The contact form
 
-The form posts to a form-handling service, which is what lets a static site
-receive email without a server. Free tiers are plenty for a small business.
+The form posts to [Web3Forms](https://web3forms.com), which relays submissions
+to `knightwebsitesllc@gmail.com`. Three hidden inputs configure it in
+`index.html`:
 
-1. Sign up at [Formspree](https://formspree.io) (or Getform, Basin, Web3Forms).
-2. Create a form and copy your endpoint URL.
-3. In `index.html`, replace `https://formspree.io/f/YOUR_FORM_ID` in the
-   `<form action="...">` attribute.
+```html
+<input type="hidden" name="access_key" value="…">
+<input type="hidden" name="subject"    value="New enquiry from knightwebstudio.com">
+<input type="hidden" name="from_name"  value="Knight Web Studio website">
+```
 
-Until you do this, submitting the form opens the visitor's email client
-pre-filled instead — so no enquiry is ever silently dropped.
+The access key is **public by design** — it sits in the page source, which is
+how a static site receives mail without a server. It is not a credential.
+
+A `botcheck` checkbox acts as a honeypot: it is hidden from people, and
+Web3Forms discards any submission where it is set.
+
+**If the POST fails for any reason** — bad key, network drop, service outage —
+`assets/js/main.js` opens the visitor's email client with the enquiry
+pre-filled and *deliberately does not clear the form*, so nothing they typed is
+lost.
+
+Note that Web3Forms only accepts submissions from a browser. Testing with curl
+returns HTTP 403 ("use our API in client side"); that is expected, not a
+misconfiguration. Test from the live site instead.
+
+To switch providers, change the `action` URL and remove the three hidden
+inputs. Basin and Formspree work with the existing JavaScript unchanged.
 
 ### 4. Colours
 
@@ -76,15 +93,22 @@ Open `assets/css/styles.css` and edit the four brand variables at the top:
 
 ```css
 --brand:        #6d8bff;   /* primary */
---brand-strong: #4f6ef7;   /* gradient end, hover states */
+--brand-strong: #2c46c4;   /* button hover, deep accents */
 --brand-soft:   #a5b8ff;   /* eyebrow text, icons */
 --accent:       #46e0c0;   /* ticks, prices, result lines */
 ```
 
 The light theme has its own overrides in the `[data-theme="light"]` block just
-below. `--brand-soft` and `--accent` are deliberately *darker* there: their dark
-theme values fail contrast on a light background. If you change one, change both
-and re-check.
+below. Three tokens differ deliberately between themes and are easy to break:
+
+- `--brand-soft` and `--accent` are *darker* in light theme — their dark-theme
+  values fail contrast on a light background.
+- `--on-brand` is the text colour used **on** brand-filled surfaces (buttons,
+  the logo mark, the "Most popular" flag). It is dark ink in dark theme,
+  because white on the dark theme's brand blue is only 3.1:1.
+- `--band` is the CTA band's background, deep enough to carry white in both.
+
+If you change the brand colour, re-check all three.
 
 ### 5. Your work
 
@@ -141,9 +165,9 @@ python3 -m http.server 8000
 
 ## Deploy to GitHub Pages + knightwebstudio.com
 
-The repo is already configured for this: the `CNAME` file names the domain, and
-`index.html`, `sitemap.xml` and `robots.txt` all point at `knightwebstudio.com`.
-Two steps remain, and only the first needs the GitHub UI.
+**This is already done and live at https://knightwebstudio.com** with a
+Let's Encrypt certificate. The steps below are recorded for reference, or for
+setting the same thing up on another domain.
 
 ### Step 1 — turn Pages on
 
