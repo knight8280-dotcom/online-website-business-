@@ -655,3 +655,9 @@ button[disabled] { opacity: .6; cursor: not-allowed; transform: none !important;
   }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* ---------- Captcha ---------- */
+.captcha-wrap { margin-bottom: 1.1rem; }
+/* The widget renders at a fixed 303px; let it shrink on narrow screens */
+.h-captcha { max-width: 100%; overflow-x: auto; }
+.h-captcha iframe { max-width: 100%; }
