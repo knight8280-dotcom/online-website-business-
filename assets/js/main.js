@@ -23,14 +23,10 @@
     if (meta) meta.setAttribute('content', theme === 'dark' ? '#080b14' : '#ffffff');
   }
 
-  var storedTheme = null;
-  try { storedTheme = localStorage.getItem('theme'); } catch (e) { /* private mode */ }
-
-  if (storedTheme) {
-    applyTheme(storedTheme);
-  } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-    applyTheme('light');
-  }
+  // The inline script in <head> already decided the theme before first paint
+  // (stored choice, else OS preference). Re-apply it here only to sync the
+  // toggle's aria-label and the theme-color meta tag.
+  applyTheme(root.getAttribute('data-theme') || 'dark');
 
   if (themeToggle) {
     themeToggle.addEventListener('click', function () {

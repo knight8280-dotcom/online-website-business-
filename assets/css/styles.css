@@ -23,6 +23,9 @@
 
 /* ---------- Design tokens: dark theme (default) ---------- */
 :root {
+  /* Native UI (form controls, scrollbars) follows the active theme */
+  color-scheme: dark;
+
   /* Brand — EDIT ME */
   --brand:        #6d8bff;
   --brand-strong: #4f6ef7;
@@ -58,6 +61,8 @@
 
 /* ---------- Light theme ---------- */
 [data-theme="light"] {
+  color-scheme: light;
+
   --bg:        #ffffff;
   --bg-alt:    #f5f7fc;
   --surface:   #ffffff;
