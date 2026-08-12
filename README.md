@@ -15,7 +15,8 @@ npm install**. Open `index.html` and it works.
 | Pricing | Three project tiers, automation add-ons, three care tiers |
 | FAQ | Eight accordion answers to the objections that stall a sale |
 | Contact | Validated enquiry form with spam honeypot |
-| Footer | Navigation, contact details, social links |
+| Footer | Navigation, contact details, privacy policy link |
+| Privacy | `privacy.html` — accurate to what the site actually collects |
 
 Also built in: dark/light theme toggle (remembers the visitor's choice), sticky
 header with active-section highlighting, mobile menu, scroll reveal animations,
@@ -25,14 +26,17 @@ tags for link previews, and JSON-LD structured data for Google.
 ## File layout
 
 ```
-index.html              All page content
-404.html                Not-found page
-assets/css/styles.css   All styling (design tokens at the top)
-assets/js/main.js       Theme, nav, reveals, form handling
-assets/img/             Project screenshots (work-*.jpg)
-robots.txt              Search engine directives
-sitemap.xml             Sitemap for search engines
-.nojekyll               Tells GitHub Pages to serve the files as-is
+index.html                All page content
+privacy.html              Privacy policy (linked from the footer)
+404.html                  Not-found page
+favicon.ico               Fallback favicon (16/32/48 px) for older browsers
+assets/css/styles.css     All styling (design tokens at the top)
+assets/js/main.js         Theme, nav, reveals, form handling
+assets/img/               Project screenshots (work-*.jpg), logo, icons
+.well-known/security.txt  Standard contact point for security reports
+robots.txt                Search engine directives
+sitemap.xml               Sitemap for search engines (both pages)
+.nojekyll                 Tells GitHub Pages to serve the files as-is
 ```
 
 ## Make it yours
@@ -49,8 +53,14 @@ the care plans. It lives in three places:
 
 - inline SVG in the header and footer, themed through `--brand` (shield) and
   `--on-brand` (the K), so it inverts correctly in light and dark
-- `assets/img/logo.svg` — standalone, used for the favicon and Apple touch icon
+- `assets/img/logo.svg` — standalone, used for the SVG favicon
+- `assets/img/apple-touch-icon.png` — 180×180 PNG for iOS home-screen
+  bookmarks (iOS does not accept SVG here), on a `#0b1020` background
+- `favicon.ico` — 16/32/48 px fallback for browsers without SVG favicon support
 - baked into `assets/img/og-image.png`
+
+If the logo changes, regenerate the PNG and ICO from `logo.svg` (any SVG
+rasteriser works — e.g. `cairosvg`), keeping the sizes above.
 
 It stays legible down to 16px. If you change `--brand`, the inline mark follows
 automatically, but `logo.svg` has its colours hard-coded and needs editing.
@@ -66,7 +76,11 @@ There is deliberately no phone number: the placeholder `555` one was removed
 rather than shipped. To add a real one, put it back in the contact list and
 footer, and add `"telephone"` to the JSON-LD block.
 
-Still to replace: the `href="#"` values on the three footer social links.
+The footer social icons were **removed** rather than shipped pointing at
+`href="#"` — dead links undercut a studio selling professionalism. When real
+profiles exist, restore the `.socials` block from git history (search for
+`aria-label="LinkedIn"`); its CSS is still in `styles.css`. Add the profile
+URLs to the JSON-LD `sameAs` array at the same time.
 
 ### 3. The contact form
 
@@ -255,9 +269,26 @@ instructions instead of the records above.
 - [x] Domain wired through `CNAME`, `index.html`, `sitemap.xml`, `robots.txt`
 - [ ] GitHub Pages enabled and IONOS DNS records added
 - [x] Social preview image added
+- [x] Privacy policy page (`privacy.html`), linked from the footer
+- [x] Favicon fallback (`favicon.ico`) and Apple touch icon (PNG)
+- [x] FAQ structured data (`FAQPage` JSON-LD) for rich results
 - [ ] Checked on a real phone
 - [ ] Google Search Console set up and sitemap submitted
 - [ ] Analytics added (Plausible or Fathom if you'd rather skip a cookie banner)
+
+## Worth adding next (needs real-world input)
+
+These can't be faked and are the highest-value gaps left:
+
+1. **Testimonials** — one sentence from each live client, with a name.
+   Strongest possible addition to the page.
+2. **An "about" block** — who you'll be working with, with a photo. Anonymous
+   studios lose work to freelancers with a face.
+3. **Email on your own domain** — e.g. `hello@knightwebstudio.com` (Google
+   Workspace or Zoho). A Gmail address on a custom domain is a trust leak.
+4. **A real scheduler** — the "Book a discovery call" CTA should open
+   Cal.com/Calendly, not the contact form.
+5. **Social profiles** — then restore the footer icons (see above).
 
 ## Browser support
 

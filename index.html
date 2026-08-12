@@ -10,21 +10,33 @@
      ========================================================================== -->
 
 <title>Knight Web Studio — Websites that win you customers</title>
-<meta name="description" content="We design and build fast, modern websites for small businesses. Launch in two weeks, flat pricing, no templates.">
+<meta name="description" content="We design and build fast, modern websites for small businesses. Launch in 2–4 weeks, flat pricing, no templates.">
 <meta name="theme-color" content="#0b1020">
 <link rel="canonical" href="https://knightwebstudio.com/">
 
 <!-- Open Graph / social sharing -->
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Knight Web Studio">
 <meta property="og:title" content="Knight Web Studio — Websites that win you customers">
-<meta property="og:description" content="We design and build fast, modern websites for small businesses. Launch in two weeks, flat pricing, no templates.">
+<meta property="og:description" content="We design and build fast, modern websites for small businesses. Launch in 2–4 weeks, flat pricing, no templates.">
 <meta property="og:url" content="https://knightwebstudio.com/">
 <meta property="og:image" content="https://knightwebstudio.com/assets/img/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="assets/img/logo.svg">
-<script>document.documentElement.classList.add('js');</script>
+<link rel="icon" href="favicon.ico" sizes="48x48"><!-- fallback for browsers without SVG favicon support -->
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png"><!-- iOS ignores SVG here; must be PNG -->
+<script>
+document.documentElement.classList.add('js');
+/* Apply the theme before first paint — main.js is deferred, and deciding the
+   theme there flashed the dark default at light-preference visitors. */
+(function () {
+  var t = null;
+  try { t = localStorage.getItem('theme'); } catch (e) { /* private mode */ }
+  if (!t && window.matchMedia('(prefers-color-scheme: light)').matches) t = 'light';
+  if (t) document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
 <link rel="preload" href="assets/fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/styles.css">
@@ -37,10 +49,62 @@
   "name": "Knight Web Studio",
   "description": "Web design and development studio building fast, modern websites for small businesses.",
   "url": "https://knightwebstudio.com/",
+  "logo": "https://knightwebstudio.com/assets/img/logo.svg",
+  "image": "https://knightwebstudio.com/assets/img/og-image.png",
   "email": "knightwebsitesllc@gmail.com",
   "priceRange": "$$",
   "areaServed": "Worldwide",
   "serviceType": ["Web design", "Web development", "Website maintenance", "SEO"]
+}
+</script>
+
+<!-- FAQ rich-result markup. Keep in sync with the visible #faq section. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How long does a website take?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A simple site is usually live in 7–10 days. A full business site runs 2–4 weeks, and stores take 4–6. The biggest variable is how quickly content and photos come back to us — we'll tell you exactly what we need on day one." }
+    },
+    {
+      "@type": "Question",
+      "name": "What do you need from me to start?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Your logo if you have one, any photos you want used, and a rough idea of the pages you need. If you don't have copy written, that's fine — we draft it and you edit. If you don't have a logo, we can design one." }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I own the website?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Completely. The domain is registered in your name, the code and design are yours on final payment, and you can move to another provider at any time. We don't hold anything hostage." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I edit the site myself?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Sites that need frequent changes are built on a CMS so you can edit text, images and blog posts without touching code. You get a recorded walkthrough of your own site at handover." }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I have to take a care plan?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No — you can take the site and host it wherever you like. Most clients stay on a plan because hosting, security updates, backups, monitoring and monthly content edits bundled from $200 works out cheaper than paying for those separately and calling someone hourly when something breaks. There are three tiers so a brochure site isn't subsidising a busy store. Plans are month-to-month and you can stop any time." }
+    },
+    {
+      "@type": "Question",
+      "name": "What about hosting and the domain?",
+      "acceptedAnswer": { "@type": "Answer", "text": "We can set both up and bill them through a care plan, or point everything at accounts you own and hand you the keys. Either way we handle the technical setup, SSL and email records." }
+    },
+    {
+      "@type": "Question",
+      "name": "What if I already have a website?",
+      "acceptedAnswer": { "@type": "Answer", "text": "We rebuild existing sites all the time. Content gets migrated, old URLs get redirected to the new ones so you keep your search rankings, and the switch-over happens with no downtime." }
+    },
+    {
+      "@type": "Question",
+      "name": "How does payment work?",
+      "acceptedAnswer": { "@type": "Answer", "text": "50% to book the project and start design, 50% on launch. Larger builds can be split into monthly instalments. Everything is fixed-price from the proposal — no hourly surprises." }
+    }
+  ]
 }
 </script>
 </head>
@@ -122,7 +186,9 @@
         <ul class="proof-list">
           <li>
             <a href="https://corbelbooks.com" target="_blank" rel="noopener">
-              <img src="assets/img/work-corbelbooks.jpg" alt="" width="1200" height="630" loading="lazy" decoding="async">
+              <!-- First proof image is above the fold on desktop and a likely LCP
+                   candidate — load it eagerly, unlike the two below it. -->
+              <img src="assets/img/work-corbelbooks.jpg" alt="" width="1200" height="630" fetchpriority="high" decoding="async">
               <span class="proof-text"><strong>Corbel Books</strong><span>Fintech SaaS</span></span>
               <svg class="proof-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
             </a>
@@ -316,6 +382,7 @@
             </a>
           </div>
         </article>
+      </div>
     </div>
   </section>
 
@@ -655,12 +722,9 @@
         <span class="brand-name">Knight Web Studio</span>
       </a>
       <p>Fast, modern websites for businesses that need to be found and trusted.</p>
-      <div class="socials">
-        <!-- EDIT ME: your real profile links -->
-        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.8 3.5a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6ZM3.3 9h3v11.5h-3Zm5.5 0h2.9v1.6a3.4 3.4 0 0 1 3-1.7c3 0 3.6 1.9 3.6 4.5v7.1h-3v-6.3c0-1.5 0-3.4-2-3.4s-2.4 1.6-2.4 3.3v6.4h-3Z"/></svg></a>
-        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1.2" fill="currentColor" stroke="none"/></svg></a>
-        <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-2.8 17.5c.4.1.6-.2.6-.5v-1.7c-2.5.5-3-1.2-3-1.2-.4-1-1-1.3-1-1.3-.8-.6.1-.6.1-.6.9.1 1.4 1 1.4 1 .8 1.4 2.1 1 2.6.8.1-.6.3-1 .6-1.2-2-.2-4.1-1-4.1-4.4 0-1 .3-1.8.9-2.4-.1-.3-.4-1.2.1-2.4 0 0 .7-.2 2.4.9a8.4 8.4 0 0 1 4.4 0c1.7-1.1 2.4-.9 2.4-.9.5 1.2.2 2.1.1 2.4.6.6.9 1.4.9 2.4 0 3.4-2.1 4.2-4.1 4.4.3.3.6.9.6 1.8v2.6c0 .3.2.6.6.5A9 9 0 0 0 12 3Z"/></svg></a>
-      </div>
+      <!-- Social icons were removed rather than shipped pointing at "#".
+           When real profiles exist, restore a .socials block here — the old
+           markup is in git history (search for aria-label="LinkedIn"). -->
     </div>
 
     <nav class="footer-col" aria-label="Services">
@@ -688,7 +752,7 @@
 
   <div class="container footer-bottom">
     <p>&copy; <span id="year">2026</span> Knight Web Studio. All rights reserved.</p>
-    <p><a href="#top">Back to top ↑</a></p>
+    <p class="footer-legal"><a href="privacy.html">Privacy policy</a> · <a href="#top">Back to top ↑</a></p>
   </div>
 </footer>
 
