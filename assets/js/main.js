@@ -161,11 +161,12 @@
     revealables.forEach(function (el) { revealObserver.observe(el); });
   }
 
-  /* ---------- hCaptcha, loaded on demand ----------
-     Loading it with the page put a third-party iframe in the contact section
-     before anyone asked for it, and captcha iframes can take focus on init,
-     which drags the scroll position down the page. Fetching it only once the
-     form is nearly in view keeps the widget ready without that cost. */
+  /* ---------- hCaptcha ----------
+     Deferred rather than loaded with the page, so no third-party iframe sits
+     in the contact section during first paint. Uses hCaptcha's auto-render:
+     the script renders every .h-captcha element it finds when it parses, which
+     is one moving part instead of an explicit-render callback that silently
+     leaves no widget if anything in the chain fails. */
   var captchaSlot = document.getElementById('hcaptcha-slot');
   var captchaRequested = false;
 
@@ -173,17 +174,10 @@
     if (captchaRequested || !captchaSlot) return;
     captchaRequested = true;
     var sc = document.createElement('script');
-    sc.src = 'https://js.hcaptcha.com/1/api.js?render=explicit&onload=kwsCaptchaReady';
+    sc.src = 'https://js.hcaptcha.com/1/api.js';
     sc.async = true; sc.defer = true;
     document.head.appendChild(sc);
   }
-
-  // Global callback the hCaptcha script invokes once it is parsed
-  window.kwsCaptchaReady = function () {
-    if (!window.hcaptcha || !captchaSlot || captchaSlot.dataset.rendered) return;
-    captchaSlot.dataset.rendered = '1';
-    window.hcaptcha.render(captchaSlot, { sitekey: captchaSlot.dataset.sitekey });
-  };
 
   if (captchaSlot) {
     if ('IntersectionObserver' in window) {
@@ -192,14 +186,16 @@
           loadCaptcha();
           capObs.disconnect();
         }
-      }, { rootMargin: '900px' });   // ready well before the visitor reaches it
+      }, { rootMargin: '900px' });
       capObs.observe(captchaSlot);
     } else {
       loadCaptcha();
     }
-    // Belt and braces: any interaction with the form pulls it in immediately
-    var cf = document.getElementById('contact-form');
-    if (cf) cf.addEventListener('focusin', loadCaptcha, { once: true });
+    var cf0 = document.getElementById('contact-form');
+    if (cf0) cf0.addEventListener('focusin', loadCaptcha, { once: true });
+    // Backstop: whatever the visitor does, the widget is ready long before
+    // they can fill the form. Late enough to stay out of first paint.
+    setTimeout(loadCaptcha, 4000);
   }
 
   /* ---------- Contact form: validation + async submit ---------- */
@@ -280,13 +276,15 @@
         return;
       }
 
-      // hCaptcha injects h-captcha-response into the form once solved. Web3Forms
-      // verifies it server-side too; this check just avoids a wasted round trip.
+      // hCaptcha injects h-captcha-response into the form once solved.
       var captchaEl = document.getElementById('captcha-error');
       var captchaField = form.elements['h-captcha-response'];
-      if (captchaField && !captchaField.value) {
-        if (captchaEl) captchaEl.textContent = 'Please confirm you are human.';
+      var widgetPresent = !!(captchaSlot && captchaSlot.querySelector('iframe, textarea'));
+
+      if (widgetPresent && (!captchaField || !captchaField.value)) {
+        if (captchaEl) captchaEl.textContent = 'Please tick the verification box above.';
         setStatus('');
+        if (captchaSlot) captchaSlot.scrollIntoView({ block: 'center' });
         return;
       }
       if (captchaEl) captchaEl.textContent = '';
@@ -313,9 +311,10 @@
               setStatus('Thanks — your enquiry is in. We’ll reply within one business day.', 'ok');
             });
         })
-        .catch(function () {
+        .catch(function (err) {
           // Never lose an enquiry: hand the visitor a pre-filled email instead.
-          setStatus('Couldn’t send that. Opening your email app so nothing is lost…', 'error');
+          var why = (err && err.message) ? ' (' + err.message + ')' : '';
+          setStatus('Couldn’t send that' + why + '. Opening your email app so nothing is lost…', 'error');
           window.location.href = mailtoFallback();
         })
         .finally(function () {
