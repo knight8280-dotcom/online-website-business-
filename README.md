@@ -100,9 +100,22 @@ how a static site receives mail without a server. It is not a credential.
 > server *reject* submissions without a valid token. Without it, a bot posting
 > straight to the API still gets through.
 
-If hCaptcha's script fails to load, the form still submits rather than trapping
-a real prospect behind a broken widget — the server-side check remains the
-authority.
+**How the widget and the guard interact** — this combination bit us once:
+
+- If the widget is on screen and unsolved, submission is blocked with an inline
+  message and the page scrolls to it.
+- If the widget never rendered at all, the form still submits, rather than
+  trapping a real prospect behind a broken third-party script.
+
+That second case is only safe when the dashboard setting is **off**. With it
+**on**, a submission carrying no token is rejected server-side, and the visitor
+falls through to the mailto fallback — which looks to them like the form
+"opened my email app instead of sending". If that happens, the widget is not
+rendering; check the browser console on the live page for an hCaptcha error.
+
+When a send fails, the status line now names the server's reason, e.g.
+"Couldn't send that (Captcha verification failed)", so the cause is visible
+without opening devtools.
 
 **If the POST fails for any reason** — bad key, network drop, service outage —
 `assets/js/main.js` opens the visitor's email client with the enquiry
