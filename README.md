@@ -14,8 +14,9 @@ npm install**. Open `index.html` and it works.
 | Process | Four-step "no surprises" explainer |
 | Pricing | Three project tiers, automation add-ons, three care tiers |
 | FAQ | Eight accordion answers to the objections that stall a sale |
-| Contact | Validated enquiry form with spam honeypot |
+| Contact | Validated enquiry form, spam honeypot, saved drafts |
 | Footer | Navigation, contact details, social links |
+| Mobile CTA | Sticky bar — the header CTA is hidden below 980px |
 
 Also built in: dark/light theme toggle (remembers the visitor's choice), sticky
 header with active-section highlighting, mobile menu, scroll reveal animations,
@@ -27,6 +28,7 @@ tags for link previews, and JSON-LD structured data for Google.
 ```
 index.html              All page content
 404.html                Not-found page
+site.webmanifest        Installable-app metadata and icons
 assets/css/styles.css   All styling (design tokens at the top)
 assets/js/main.js       Theme, nav, reveals, form handling
 assets/img/             Project screenshots (work-*.jpg)
@@ -116,6 +118,12 @@ rendering; check the browser console on the live page for an hCaptcha error.
 When a send fails, the status line now names the server's reason, e.g.
 "Couldn't send that (Captcha verification failed)", so the cause is visible
 without opening devtools.
+
+**Drafts are saved as you type.** Name, email, business, budget, selected
+services and the message go to `localStorage` (debounced, ~400ms) so a half-
+written enquiry survives a tab switch or an accidental back button. Cleared on
+a successful send. Nothing is transmitted; every read and write is wrapped in
+try/catch so private mode or a full quota can never break the form.
 
 **If the POST fails for any reason** — bad key, network drop, service outage —
 `assets/js/main.js` opens the visitor's email client with the enquiry
@@ -260,6 +268,21 @@ option and it breaks both HTTPS and search rankings. Use the DNS records above.
 Netlify, Cloudflare Pages and Vercel all work too — connect the repo with an
 empty build command and publish directory `.`, then follow that host's own DNS
 instructions instead of the records above.
+
+## Search visibility
+
+`index.html` carries a JSON-LD `@graph` with three nodes:
+
+- **Organization / ProfessionalService** — name, logo, email, and an
+  `OfferCatalog` listing the four prices, so Google can show them
+- **WebSite**
+- **FAQPage** — all eight FAQ entries
+
+> The FAQ markup mirrors the visible accordion **verbatim**. Google penalises
+> structured data that does not match on-page content, so if you edit an FAQ
+> answer, edit it in both places.
+
+Validate changes with the [Rich Results Test](https://search.google.com/test/rich-results).
 
 ## Before you launch — checklist
 
