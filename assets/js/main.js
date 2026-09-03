@@ -85,9 +85,10 @@
   var header = document.getElementById('site-header');
   var progress = document.getElementById('scroll-progress');
   var indicator = document.querySelector('.nav-indicator');
-  var sections = Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
   var ticking = false;
+
+  function currentNavLink() { return document.querySelector('.nav-links a[aria-current="page"]'); }
 
   // Desktop only: glide the pill to whichever link is active
   function moveIndicator(target) {
@@ -101,18 +102,6 @@
   function onScroll() {
     if (header) header.classList.toggle('scrolled', window.scrollY > 8);
 
-    var pos = window.scrollY + 120;
-    var currentId = '';
-    for (var i = 0; i < sections.length; i++) {
-      if (sections[i].offsetTop <= pos) currentId = sections[i].id;
-    }
-    var activeLink = null;
-    navLinks.forEach(function (link) {
-      var on = link.getAttribute('href') === '#' + currentId;
-      link.classList.toggle('active', on);
-      if (on) activeLink = link;
-    });
-    if (!nav || !nav.classList.contains('open')) moveIndicator(activeLink);
 
     if (progress) {
       var max = document.documentElement.scrollHeight - window.innerHeight;
@@ -127,10 +116,10 @@
   });
   var navInner = document.querySelector('.nav-inner');
   if (navInner) navInner.addEventListener('mouseleave', function () {
-    moveIndicator(document.querySelector('.nav-links a.active'));
+    moveIndicator(currentNavLink());
   });
   window.addEventListener('resize', function () {
-    moveIndicator(document.querySelector('.nav-links a.active'));
+    moveIndicator(currentNavLink());
   });
 
   window.addEventListener('scroll', function () {
@@ -140,6 +129,7 @@
     }
   }, { passive: true });
   onScroll();
+  moveIndicator(currentNavLink());
 
   /* ---------- Reveal on scroll ---------- */
   var revealables = document.querySelectorAll('.reveal');
