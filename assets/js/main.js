@@ -161,6 +161,38 @@
     revealables.forEach(function (el) { revealObserver.observe(el); });
   }
 
+  /* ---------- Mobile sticky CTA ----------
+     Appears once the hero is behind you, and gets out of the way over the
+     contact section and footer so it never covers the form it points at. */
+  var mobileCta = document.getElementById('mobile-cta');
+  if (mobileCta) {
+    mobileCta.hidden = false;
+    var contactSection = document.getElementById('contact');
+    var footerEl = document.querySelector('.site-footer');
+    var nearForm = false;
+
+    if ('IntersectionObserver' in window && contactSection) {
+      var ctaObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) nearForm = true; });
+        if (!entries.some(function (e) { return e.isIntersecting; })) nearForm = false;
+        updateCta();
+      }, { threshold: 0 });
+      ctaObs.observe(contactSection);
+      if (footerEl) ctaObs.observe(footerEl);
+    }
+
+    var ctaShown = false;
+    function updateCta() {
+      var past = window.scrollY > window.innerHeight * 0.6;
+      var show = past && !nearForm && !(nav && nav.classList.contains('open'));
+      if (show !== ctaShown) { ctaShown = show; mobileCta.classList.toggle('show', show); }
+    }
+    window.addEventListener('scroll', function () {
+      window.requestAnimationFrame(updateCta);
+    }, { passive: true });
+    updateCta();
+  }
+
   /* ---------- hCaptcha ----------
      Deferred rather than loaded with the page, so no third-party iframe sits
      in the contact section during first paint. Uses hCaptcha's auto-render:
@@ -231,6 +263,47 @@
       setError(field, '');
       return true;
     }
+
+    /* Draft persistence — a half-written enquiry survives a tab switch, a
+       phone call or an accidental back button. Cleared on a successful send.
+       Kept to this device: nothing is transmitted anywhere. */
+    var DRAFT_KEY = 'kws-enquiry-draft';
+    var draftFields = ['name', 'email', 'company', 'budget', 'message'];
+
+    function saveDraft() {
+      try {
+        var d = {};
+        draftFields.forEach(function (n) { if (form.elements[n]) d[n] = form.elements[n].value; });
+        d.services = Array.prototype.slice.call(form.querySelectorAll('input[name="services"]:checked'))
+          .map(function (c) { return c.value; });
+        var empty = draftFields.every(function (n) { return !d[n]; }) && !d.services.length;
+        if (empty) localStorage.removeItem(DRAFT_KEY);
+        else localStorage.setItem(DRAFT_KEY, JSON.stringify(d));
+      } catch (e) { /* private mode, quota — a draft is never worth an error */ }
+    }
+    function clearDraft() { try { localStorage.removeItem(DRAFT_KEY); } catch (e) {} }
+    function restoreDraft() {
+      try {
+        var raw = localStorage.getItem(DRAFT_KEY);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        draftFields.forEach(function (n) {
+          if (form.elements[n] && typeof d[n] === 'string') form.elements[n].value = d[n];
+        });
+        (d.services || []).forEach(function (v) {
+          var c = form.querySelector('input[name="services"][value="' + CSS.escape(v) + '"]');
+          if (c) c.checked = true;
+        });
+      } catch (e) { /* ignore malformed or unavailable storage */ }
+    }
+    restoreDraft();
+
+    var draftTimer = null;
+    form.addEventListener('input', function () {
+      clearTimeout(draftTimer);
+      draftTimer = setTimeout(saveDraft, 400);
+    });
+    form.addEventListener('change', saveDraft);
 
     var required = Array.prototype.slice.call(form.querySelectorAll('[required]'));
 
@@ -308,6 +381,7 @@
                 throw new Error(data.message || 'Request failed with status ' + response.status);
               }
               form.reset();
+              clearDraft();
               setStatus('Thanks — your enquiry is in. We’ll reply within one business day.', 'ok');
             });
         })

@@ -824,3 +824,35 @@ button[disabled] { opacity: .6; cursor: not-allowed; transform: none !important;
   /* transform does not shrink the layout box, so reclaim the empty space */
   .captcha-wrap > .h-captcha { margin-bottom: -20px; }
 }
+
+/* ---------- Mobile sticky CTA ---------- */
+.mobile-cta { display: none; }
+
+@media (max-width: 980px) {
+  .mobile-cta {
+    display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 80;
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border);
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+    transform: translateY(110%);
+    transition: transform .3s var(--ease);
+  }
+  .mobile-cta.show { transform: none; }
+  .mobile-cta[hidden] { display: block; }   /* visibility is driven by .show */
+  .mobile-cta-inner {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    max-width: 560px; margin-inline: auto;
+  }
+  .mobile-cta-text { font-size: .86rem; color: var(--muted); line-height: 1.25; }
+  .mobile-cta .btn { flex: none; }
+}
+
+/* Very narrow phones: the qualifier is the first thing to go */
+@media (max-width: 359px) {
+  .mobile-cta-text span { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-cta { transition: none; }
+}
