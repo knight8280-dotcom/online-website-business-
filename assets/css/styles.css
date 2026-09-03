@@ -116,6 +116,9 @@ h1 { font-size: clamp(2.35rem, 5.2vw, 4.1rem); letter-spacing: -.04em; font-weig
 h1 em { font-style: normal; color: var(--brand); }
 h2 { font-size: clamp(1.75rem, 3.4vw, 2.6rem); letter-spacing: -.032em; line-height: 1.06; }
 h3 { font-size: 1.16rem; letter-spacing: -.018em; font-weight: 600; }
+/* Sub-page card titles sit straight under the h1, so they are h2s in the
+   document outline but keep h3 sizing. */
+.h3 { font-size: 1.16rem; letter-spacing: -.018em; font-weight: 600; line-height: 1.08; }
 p  { margin: 0 0 1rem; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 
@@ -247,7 +250,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   font-size: .94rem; font-weight: 500; color: var(--muted);
   transition: color .2s var(--ease);
 }
-.nav-links a:hover, .nav-links a.active { color: var(--text); }
+.nav-links a:hover { color: var(--text); }
 
 /* The pill slides between items instead of blinking on and off */
 .nav-indicator {
@@ -335,17 +338,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .proof-list a:hover .proof-arrow { color: var(--brand); transform: translate(2px, -2px); }
 }
 
-/* ---------- Stats ---------- */
-.stats { padding: 0 0 clamp(40px, 6vw, 72px); }
-.stats-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
-  padding: 28px; border: 1px solid var(--border); border-radius: var(--radius-lg);
-  background: var(--surface); box-shadow: var(--shadow-sm);
-}
-.stat { text-align: center; }
-.stat strong { display: block; font-size: clamp(1.6rem, 3vw, 2.15rem); letter-spacing: -.03em; }
-.stat span { font-size: .87rem; color: var(--muted); }
-
 /* ---------- Cards ---------- */
 .card {
   padding: 28px; border: 1px solid var(--border); border-radius: var(--radius-lg);
@@ -424,7 +416,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 .work-body { padding: clamp(22px, 3vw, 38px) clamp(22px, 3vw, 38px) clamp(22px, 3vw, 38px) 0; }
 .work-card:nth-child(even) .work-body { padding-right: 0; padding-left: clamp(22px, 3vw, 38px); }
-.work-body h3 { font-size: clamp(1.35rem, 2.4vw, 1.85rem); margin-bottom: .45rem; }
+.work-body h3, .work-body .h3 { font-size: clamp(1.35rem, 2.4vw, 1.85rem); margin-bottom: .45rem; }
 .work-body p { color: var(--muted); font-size: .97rem; max-width: 46ch; }
 .work-tag { font-size: .74rem; letter-spacing: .07em; text-transform: uppercase; color: var(--brand-soft); margin-bottom: .35rem; }
 .work-result { margin: 0; font-weight: 600; font-size: .9rem !important; color: var(--accent) !important; }
@@ -476,7 +468,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   border: 1px solid var(--border); border-radius: var(--radius-lg);
   background: var(--surface);
 }
-.addons-head h3 { font-size: 1.28rem; margin-bottom: .5rem; }
+.addons-head h3, .addons-head .h3 { font-size: 1.28rem; margin-bottom: .5rem; }
 .addons-head p { color: var(--muted); font-size: .94rem; margin: 0; }
 
 .addon-list { display: grid; gap: 12px; }
@@ -504,7 +496,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
     radial-gradient(90% 130% at 100% 0%, color-mix(in srgb, var(--accent) 11%, transparent), transparent 62%),
     var(--surface);
 }
-.care-copy h3 { font-size: clamp(1.35rem, 2.4vw, 1.75rem); margin-bottom: .6rem; }
+.care-copy h3, .care-copy .h3 { font-size: clamp(1.35rem, 2.4vw, 1.75rem); margin-bottom: .6rem; }
 .care-price { color: var(--accent); font-size: 1.28em; letter-spacing: -.03em; }
 .care-per { color: var(--muted); font-weight: 500; font-size: .62em; }
 .care-copy p { color: var(--muted); font-size: .97rem; margin-bottom: 1.4rem; }
@@ -549,23 +541,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   letter-spacing: .03em; white-space: nowrap;
 }
 
-/* ---------- Testimonials ---------- */
-.quote {
-  margin: 0; padding: 28px;
-  border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface);
-  display: flex; flex-direction: column; gap: 1.2rem;
-}
-.quote blockquote { margin: 0; font-size: 1rem; line-height: 1.7; }
-.quote figcaption { display: flex; align-items: center; gap: .8rem; margin-top: auto; }
-.quote figcaption span { display: flex; flex-direction: column; font-size: .84rem; color: var(--muted); }
-.quote figcaption strong { color: var(--text); font-size: .93rem; }
-.avatar {
-  display: grid !important; place-items: center;
-  width: 42px; height: 42px; flex: none; border-radius: 50%;
-  background: linear-gradient(135deg, var(--brand), var(--accent));
-  color: #fff !important; font-weight: 700; font-size: .82rem; letter-spacing: .03em;
-}
-
 /* ---------- FAQ ---------- */
 .faq-list { display: grid; gap: 12px; }
 .faq-item {
@@ -594,6 +569,22 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* Grid items default to min-width:auto, so a fixed-width child — the 303px
    hCaptcha iframe — can force the column wider than the viewport. */
 .contact-wrap > * { min-width: 0; }
+
+/* What happens after you send the form — replaces a second copy of the
+   page heading that used to sit here. */
+.next-steps { display: grid; gap: .9rem; counter-reset: next; margin-bottom: 2rem; }
+.next-steps li {
+  position: relative; padding-left: 2.4rem;
+  color: var(--muted); font-size: .95rem; line-height: 1.55;
+}
+.next-steps li strong { color: var(--text); font-weight: 650; }
+.next-steps li::before {
+  counter-increment: next; content: counter(next);
+  position: absolute; left: 0; top: .1rem;
+  display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
+  background: color-mix(in srgb, var(--brand) 16%, transparent);
+  color: var(--brand-soft); font-size: .78rem; font-weight: 700;
+}
 
 .contact-list { display: grid; gap: 1rem; margin-top: 1.8rem; }
 .contact-list li { display: flex; align-items: center; gap: .85rem; color: var(--muted); font-size: .96rem; }
@@ -676,20 +667,11 @@ button[disabled] { opacity: .6; cursor: not-allowed; transform: none !important;
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 34px; padding-bottom: 40px; }
 .footer-brand p { color: var(--muted); font-size: .93rem; max-width: 30em; margin: 1rem 0 1.2rem; }
 .footer-col { display: grid; gap: .55rem; align-content: start; }
-.footer-col h4 { font-size: .82rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+.footer-col h3 { font-size: .82rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
 /* Padding rather than font-size, so these clear a comfortable touch target
    without changing the typographic rhythm. */
 .footer-col a { font-size: .93rem; color: var(--muted); padding-block: .3rem; transition: color .18s var(--ease); }
 .footer-col a:hover { color: var(--text); }
-
-.socials { display: flex; gap: 10px; }
-.socials a {
-  display: grid; place-items: center; width: 38px; height: 38px;
-  border: 1px solid var(--border); border-radius: 11px; color: var(--muted);
-  transition: all .18s var(--ease);
-}
-.socials a:hover { color: var(--text); border-color: var(--brand); background: var(--surface-2); }
-.socials svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 
 .footer-bottom {
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px;
@@ -698,6 +680,7 @@ button[disabled] { opacity: .6; cursor: not-allowed; transform: none !important;
 .footer-bottom p { margin: 0; font-size: .85rem; color: var(--muted); }
 .footer-bottom a { display: inline-block; padding: .4rem .1rem; }
 .footer-bottom a:hover { color: var(--text); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 0 1.4rem; }
 
 /* ---------- Scroll reveal ---------- */
 /* Scoped to .js so the page is fully visible if scripting is unavailable */
@@ -721,7 +704,6 @@ button[disabled] { opacity: .6; cursor: not-allowed; transform: none !important;
   .care-panel, .addons { grid-template-columns: 1fr; }
   .care-includes .care-list { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 26px; }
 
   /* Full-screen overlay menu */
   .nav {
@@ -749,7 +731,6 @@ button[disabled] { opacity: .6; cursor: not-allowed; transform: none !important;
     letter-spacing: -.03em; color: var(--text);
     padding: .28em 0; border-radius: 0;
   }
-  .nav-links a.active { color: var(--brand); }
   .nav-indicator { display: none; }
 
   .nav-foot {
@@ -791,8 +772,11 @@ button[disabled] { opacity: .6; cursor: not-allowed; transform: none !important;
 
 /* ---------- Print ---------- */
 @media print {
-  .site-header, .cta-band, .contact-form, .socials { display: none; }
+  .site-header, .cta-band, .contact-form, .mobile-cta, .skip-link, .section-more { display: none !important; }
   body { background: #fff; color: #000; }
+  .js .reveal { opacity: 1; transform: none; }
+  .faq-item { break-inside: avoid; }
+  .faq-item[open] summary::after { display: none; }
 }
 
 /* ---------- Reduced motion ---------- */
@@ -906,6 +890,18 @@ button[disabled] { opacity: .6; cursor: not-allowed; transform: none !important;
 
 /* Active page marker in the nav */
 .nav-links a[aria-current="page"] { color: var(--text); }
+
+/* ---------- Long-form text (privacy page) ---------- */
+.prose { max-width: 68ch; margin-inline: auto; }
+.prose h2 { font-size: 1.35rem; margin: 2.2rem 0 .6rem; }
+.prose h2:first-child { margin-top: 0; }
+.prose p, .prose li { color: var(--muted); font-size: 1rem; }
+.prose ul { display: grid; gap: .45rem; margin: 0 0 1rem; padding-left: 1.2rem; list-style: disc; }
+.prose li::marker { color: var(--brand-soft); }
+.prose a { color: var(--brand); text-decoration: underline; text-underline-offset: .15em; }
+.prose a:hover { color: var(--text); }
+.prose strong { color: var(--text); }
+.prose-updated { font-size: .85rem; color: var(--muted); margin-bottom: 2rem; }
 
 @media (max-width: 980px) {
   .mini-work-grid, .mini-price-grid { grid-template-columns: repeat(2, 1fr); }
