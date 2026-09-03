@@ -4,19 +4,23 @@ A complete, production-ready marketing website for a web design & development
 business. Plain HTML, CSS and JavaScript — **no build step, no dependencies, no
 npm install**. Open `index.html` and it works.
 
-## What's included
+## Pages
 
-| Section | Purpose |
+A landing page plus six pages, each with its own title, description, canonical
+URL and Open Graph tags. The menu reaches all of them.
+
+| URL | Contents |
 | --- | --- |
-| Hero | Headline, two calls to action, and a Live work panel of real projects |
-| Services | Six service cards (design, e-commerce, SEO, care, redesigns, branding) |
-| Work | Three real, live projects with screenshots and links out |
-| Process | Four-step "no surprises" explainer |
-| Pricing | Three project tiers, automation add-ons, three care tiers |
-| FAQ | Eight accordion answers to the objections that stall a sale |
-| Contact | Validated enquiry form, spam honeypot, saved drafts |
-| Footer | Navigation, contact details, social links |
-| Mobile CTA | Sticky bar — the header CTA is hidden below 980px |
+| `/` | Landing page: hero, three service cards, three projects, three prices — each teasing the full page |
+| `/services/` | All six services |
+| `/work/` | Three live projects as full case-study rows |
+| `/process/` | Four-step "no surprises" explainer |
+| `/pricing/` | Three project tiers, automation add-ons, three care tiers |
+| `/faq/` | Eight answers, with FAQPage schema |
+| `/contact/` | Enquiry form, spam honeypot, saved drafts |
+
+Every page also carries the header, footer and (except `/contact/`) the sticky
+mobile CTA — the header's "Get a quote" is hidden below 980px.
 
 Also built in: dark/light theme toggle (remembers the visitor's choice), sticky
 header with active-section highlighting, mobile menu, scroll reveal animations,
@@ -26,7 +30,9 @@ tags for link previews, and JSON-LD structured data for Google.
 ## File layout
 
 ```
-index.html              All page content
+index.html              Landing page
+services/index.html     One directory per page, so URLs are /services/ etc.
+work/  process/  pricing/  faq/  contact/
 404.html                Not-found page
 site.webmanifest        Installable-app metadata and icons
 assets/css/styles.css   All styling (design tokens at the top)
@@ -36,6 +42,21 @@ robots.txt              Search engine directives
 sitemap.xml             Sitemap for search engines
 .nojekyll               Tells GitHub Pages to serve the files as-is
 ```
+
+## Editing across pages
+
+There is still **no build step** — every page is plain HTML you can open and
+edit. The trade-off is that the header, footer and mobile CTA are duplicated in
+all seven files. If you change one of those, change it in all seven, or they
+will drift.
+
+Asset and link paths are **root-absolute** (`/assets/…`, `/pricing/`) so the
+same markup works from any directory depth. That relies on the site living at
+the domain root, which it does.
+
+The landing page's teasers are copies of the first three service cards, the
+three projects and the three price tiers. Update the full page and the landing
+page together.
 
 ## Make it yours
 
@@ -68,7 +89,9 @@ There is deliberately no phone number: the placeholder `555` one was removed
 rather than shipped. To add a real one, put it back in the contact list and
 footer, and add `"telephone"` to the JSON-LD block.
 
-Still to replace: the `href="#"` values on the three footer social links.
+The footer previously held three social icons pointing at `href="#"`. Once the
+site became seven pages that was twenty-one dead links, so they were removed.
+Send me real profile URLs and they go back in.
 
 ### 3. The contact form
 
