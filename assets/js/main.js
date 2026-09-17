@@ -157,18 +157,21 @@
   var mobileCta = document.getElementById('mobile-cta');
   if (mobileCta) {
     mobileCta.hidden = false;
-    var contactSection = document.getElementById('contact');
-    var footerEl = document.querySelector('.site-footer');
+    // Sub-pages have no #contact section, only the footer — observe whichever
+    // exists, and track each target separately so one leaving the viewport
+    // doesn't cancel the other still being in it.
+    var avoid = [document.getElementById('contact'), document.querySelector('.site-footer')]
+      .filter(Boolean);
+    var inView = [];
     var nearForm = false;
 
-    if ('IntersectionObserver' in window && contactSection) {
+    if ('IntersectionObserver' in window && avoid.length) {
       var ctaObs = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) { if (e.isIntersecting) nearForm = true; });
-        if (!entries.some(function (e) { return e.isIntersecting; })) nearForm = false;
+        entries.forEach(function (e) { inView[avoid.indexOf(e.target)] = e.isIntersecting; });
+        nearForm = inView.some(Boolean);
         updateCta();
       }, { threshold: 0 });
-      ctaObs.observe(contactSection);
-      if (footerEl) ctaObs.observe(footerEl);
+      avoid.forEach(function (el) { ctaObs.observe(el); });
     }
 
     var ctaShown = false;

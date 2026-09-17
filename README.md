@@ -6,33 +6,38 @@ npm install**. Open `index.html` and it works.
 
 ## Pages
 
-A landing page plus six pages, each with its own title, description, canonical
-URL and Open Graph tags. The menu reaches all of them.
+A landing page plus seven pages, each with its own title, description, canonical
+URL and Open Graph tags. The menu reaches the first six; privacy is linked from
+the footer.
 
 | URL | Contents |
 | --- | --- |
-| `/` | Landing page: hero, three service cards, three projects, three prices — each teasing the full page |
+| `/` | Landing page: hero, three service cards, three projects, four process steps, three prices — each teasing the full page |
 | `/services/` | All six services |
 | `/work/` | Three live projects as full case-study rows |
 | `/process/` | Four-step "no surprises" explainer |
 | `/pricing/` | Three project tiers, automation add-ons, three care tiers |
 | `/faq/` | Eight answers, with FAQPage schema |
-| `/contact/` | Enquiry form, spam honeypot, saved drafts |
+| `/contact/` | Enquiry form, spam honeypot, saved drafts, "what happens next" |
+| `/privacy/` | Plain-English privacy notice — see [Privacy page](#7-privacy-page) |
 
-Every page also carries the header, footer and (except `/contact/`) the sticky
-mobile CTA — the header's "Get a quote" is hidden below 980px.
+Every page also carries the header, footer and (except `/contact/` and
+`/privacy/`) the sticky mobile CTA — the header's "Get a quote" is hidden
+below 980px.
 
-Also built in: dark/light theme toggle (remembers the visitor's choice), sticky
-header with active-section highlighting, mobile menu, scroll reveal animations,
-`prefers-reduced-motion` support, keyboard accessibility, skip link, Open Graph
-tags for link previews, and JSON-LD structured data for Google.
+Also built in: dark/light theme toggle (remembers the visitor's choice, and is
+restored by an inline script before first paint so there is no flash), sticky
+header with a sliding active-page marker, mobile menu, scroll reveal
+animations, `prefers-reduced-motion` support, keyboard accessibility, skip
+link, Open Graph tags for link previews, and JSON-LD structured data for
+Google.
 
 ## File layout
 
 ```
 index.html              Landing page
 services/index.html     One directory per page, so URLs are /services/ etc.
-work/  process/  pricing/  faq/  contact/
+work/  process/  pricing/  faq/  contact/  privacy/
 404.html                Not-found page
 site.webmanifest        Installable-app metadata and icons
 assets/css/styles.css   All styling (design tokens at the top)
@@ -47,16 +52,26 @@ sitemap.xml             Sitemap for search engines
 
 There is still **no build step** — every page is plain HTML you can open and
 edit. The trade-off is that the header, footer and mobile CTA are duplicated in
-all seven files. If you change one of those, change it in all seven, or they
-will drift.
+all eight files. If you change one of those, change it in all eight, or they
+will drift. A quick way to check they haven't:
+
+```bash
+for f in index.html */index.html; do grep -c 'id="mobile-cta"' $f; done   # 1 each, 0 on contact/privacy
+```
 
 Asset and link paths are **root-absolute** (`/assets/…`, `/pricing/`) so the
 same markup works from any directory depth. That relies on the site living at
 the domain root, which it does.
 
 The landing page's teasers are copies of the first three service cards, the
-three projects and the three price tiers. Update the full page and the landing
-page together.
+three projects, the four process steps (shortened) and the three price tiers.
+Update the full page and the landing page together.
+
+**Heading levels.** On the landing page, section titles are `h2` and card
+titles `h3`. On the sub-pages the page title is the `h1` and card titles sit
+directly under it, so they are `<h2 class="h3">` — an `h2` for the document
+outline, sized like an `h3`. Keep that pattern when adding cards, or Lighthouse
+will flag skipped heading levels.
 
 ## Make it yours
 
@@ -80,10 +95,10 @@ automatically, but `logo.svg` has its colours hard-coded and needs editing.
 
 ### 2. Contact details
 
-The contact address is `knightwebsitesllc@gmail.com`. It appears in
-`index.html` (contact list, footer, JSON-LD) and in `assets/js/main.js` (the
-form's mailto fallback and its error message) — change it in both files if it
-ever moves.
+The contact address is `knightwebsitesllc@gmail.com`. It appears in every
+page's header menu, footer and JSON-LD, in `contact/index.html` (contact
+list), `privacy/index.html`, and in `assets/js/main.js` (the form's mailto
+fallback) — a project-wide search-and-replace is the safe way to change it.
 
 There is deliberately no phone number: the placeholder `555` one was removed
 rather than shipped. To add a real one, put it back in the contact list and
@@ -95,9 +110,9 @@ Send me real profile URLs and they go back in.
 
 ### 3. The contact form
 
-The form posts to [Web3Forms](https://web3forms.com), which relays submissions
-to `knightwebsitesllc@gmail.com`. Three hidden inputs configure it in
-`index.html`:
+The form lives in `contact/index.html` and posts to
+[Web3Forms](https://web3forms.com), which relays submissions to
+`knightwebsitesllc@gmail.com`. Three hidden inputs configure it:
 
 ```html
 <input type="hidden" name="access_key" value="…">
@@ -195,9 +210,10 @@ from the site itself, a `Live` badge and a link out:
 | GamersPulseHQ | its own Open Graph card |
 
 Images live in `assets/img/work-*.jpg`, all 1200px wide and under 90 KB. To add
-a fourth project, copy one `<article class="work-card">` block in `index.html`,
-drop a matching image in `assets/img/`, and update the text. The grid reflows on
-its own.
+a fourth project, copy one `<article class="work-card">` block in
+`work/index.html`, drop a matching image in `assets/img/`, and update the text.
+The grid reflows on its own. The landing page and hero panel show only the
+first three, so decide whether the new one belongs there too.
 
 All descriptions are factual — taken from each site's own copy — with no
 invented metrics. Keep it that way: a result line you can't defend is worse than
@@ -218,8 +234,11 @@ Current prices, set against 2026 market research:
 | Care — Commerce | $600/mo | |
 
 Starter was raised from $1,500 because three pages for $1,500 undercut what
-freelancers charge for one. Each price appears once in `index.html`; the care
-figures also appear in the FAQ answer about care plans.
+freelancers charge for one. Each price appears in `pricing/index.html`, the
+three project tiers again on the landing page, the four headline prices in
+every page's JSON-LD `OfferCatalog`, and the $200 care figure in the FAQ answer
+about care plans and the services page. Search for the old figure before
+changing one.
 
 ### 6. Social preview image
 
@@ -227,6 +246,15 @@ figures also appear in the FAQ answer about care plans.
 link on LinkedIn, WhatsApp or Slack. It carries the logo, the headline and the
 domain. To regenerate it after a copy or brand change, rebuild it from the same
 markup used to produce it and re-export at 1200×630.
+
+### 7. Privacy page
+
+`/privacy/` is a plain-English notice written to match what the site actually
+does today: form data relayed by Web3Forms, hCaptcha on the contact page,
+theme and draft in local storage, GitHub Pages hosting, and **no analytics**.
+It is not legal advice. Read it once, and update it if you add analytics, a
+newsletter, or any other tool that touches visitor data — the analytics
+section promises the page will name the tool.
 
 ## Run it locally
 
@@ -294,16 +322,22 @@ instructions instead of the records above.
 
 ## Search visibility
 
-`index.html` carries a JSON-LD `@graph` with three nodes:
+Every page carries a JSON-LD `@graph` with two nodes:
 
 - **Organization / ProfessionalService** — name, logo, email, and an
   `OfferCatalog` listing the four prices, so Google can show them
 - **WebSite**
-- **FAQPage** — all eight FAQ entries
+
+Each sub-page adds a **BreadcrumbList**, and `faq/index.html` adds a
+**FAQPage** with all eight entries.
 
 > The FAQ markup mirrors the visible accordion **verbatim**. Google penalises
 > structured data that does not match on-page content, so if you edit an FAQ
 > answer, edit it in both places.
+
+`sitemap.xml` carries a `lastmod` per URL. Bump the date on a page when you
+change it materially; Google ignores `changefreq` and `priority` but does
+read `lastmod`.
 
 Validate changes with the [Rich Results Test](https://search.google.com/test/rich-results).
 
@@ -316,7 +350,8 @@ Validate changes with the [Rich Results Test](https://search.google.com/test/ric
 - [x] Social preview image added
 - [ ] Checked on a real phone
 - [ ] Google Search Console set up and sitemap submitted
-- [ ] Analytics added (Plausible or Fathom if you'd rather skip a cookie banner)
+- [ ] Analytics added (Plausible or Fathom if you'd rather skip a cookie banner) — then update `/privacy/`
+- [ ] Read `/privacy/` once and confirm it describes what you actually do
 
 ## Browser support
 

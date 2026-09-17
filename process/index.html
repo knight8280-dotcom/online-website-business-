@@ -14,15 +14,27 @@
 <meta property="og:description" content="Four steps from discovery call to launch, with a fixed quote and no surprises.">
 <meta property="og:url" content="https://knightwebstudio.com/process/">
 <meta property="og:image" content="https://knightwebstudio.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Knight Web Studio — websites that win you customers">
 <meta property="og:site_name" content="Knight Web Studio">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/img/logo.svg">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="preconnect" href="https://js.hcaptcha.com" crossorigin>
-<link rel="dns-prefetch" href="https://js.hcaptcha.com">
-<script>document.documentElement.classList.add('js');</script>
+<script>
+  // Restore the saved theme before first paint, so a light-theme visitor
+  // never sees a dark flash. main.js still owns the toggle itself.
+  (function () {
+    var d = document.documentElement; d.classList.add('js');
+    try {
+      var t = localStorage.getItem('theme');
+      if (!t && matchMedia('(prefers-color-scheme: light)').matches) t = 'light';
+      if (t) d.setAttribute('data-theme', t);
+    } catch (e) { /* private mode */ }
+  })();
+</script>
 <link rel="preload" href="/assets/fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/styles.css">
@@ -195,22 +207,22 @@
       <ol class="steps">
         <li class="step reveal">
           <span class="step-num">01</span>
-          <h3>Discovery call</h3>
+          <h2 class="h3">Discovery call</h2>
           <p>A free 30-minute call about your business, your customers and what the site needs to achieve. You leave with a plan whether or not you hire us.</p>
         </li>
         <li class="step reveal">
           <span class="step-num">02</span>
-          <h3>Proposal &amp; design</h3>
+          <h2 class="h3">Proposal &amp; design</h2>
           <p>A fixed quote and timeline, then design concepts for your key pages. We iterate until you're genuinely happy — no build starts before that.</p>
         </li>
         <li class="step reveal">
           <span class="step-num">03</span>
-          <h3>Build &amp; review</h3>
+          <h2 class="h3">Build &amp; review</h2>
           <p>We build on a private staging link you can check any time. Weekly progress notes, and one round of revisions baked into the price.</p>
         </li>
         <li class="step reveal">
           <span class="step-num">04</span>
-          <h3>Launch &amp; support</h3>
+          <h2 class="h3">Launch &amp; support</h2>
           <p>We handle domains, hosting, analytics and redirects. After launch you get a walkthrough video and 30 days of free support.</p>
         </li>
       </ol>
@@ -236,17 +248,6 @@
   </div>
 </div>
 
-</main>
-
-<!-- Mobile-only sticky CTA: the header's "Get a quote" is hidden below 980px,
-     so without this there is no persistent way to convert on a phone. -->
-<div class="mobile-cta" id="mobile-cta" hidden>
-  <div class="mobile-cta-inner">
-    <span class="mobile-cta-text">Free 30-min call<span> · no pitch</span></span>
-    <a class="btn btn-primary btn-sm" href="/contact/">Get a quote</a>
-  </div>
-</div>
-
 <!-- ===================== FOOTER ===================== -->
 <footer class="site-footer">
   <div class="container footer-grid">
@@ -259,7 +260,7 @@
     </div>
 
     <nav class="footer-col" aria-label="Services">
-      <h4>Services</h4>
+      <h3>Services</h3>
       <a href="/services/">Website design</a>
       <a href="/services/">E-commerce</a>
       <a href="/services/">SEO</a>
@@ -267,7 +268,7 @@
     </nav>
 
     <nav class="footer-col" aria-label="Company">
-      <h4>Company</h4>
+      <h3>Company</h3>
       <a href="/work/">Our work</a>
       <a href="/process/">Process</a>
       <a href="/pricing/">Pricing</a>
@@ -275,7 +276,7 @@
     </nav>
 
     <nav class="footer-col" aria-label="Contact">
-      <h4>Contact</h4>
+      <h3>Contact</h3>
       <a href="mailto:knightwebsitesllc@gmail.com">knightwebsitesllc@gmail.com</a>
       <a href="/contact/">Start a project</a>
     </nav>
@@ -283,7 +284,7 @@
 
   <div class="container footer-bottom">
     <p>&copy; <span id="year">2026</span> Knight Web Studio. All rights reserved.</p>
-    <p><a href="/">Back to top ↑</a></p>
+    <p class="footer-links"><a href="/privacy/">Privacy</a><a href="#top">Back to top ↑</a></p>
   </div>
 </footer>
 <script src="/assets/js/main.js" defer></script>

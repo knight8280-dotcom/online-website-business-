@@ -14,15 +14,27 @@
 <meta property="og:description" content="Three live projects: Corbel Books, Smilys Softwash and GamersPulseHQ. Every site here is ours.">
 <meta property="og:url" content="https://knightwebstudio.com/work/">
 <meta property="og:image" content="https://knightwebstudio.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Knight Web Studio — websites that win you customers">
 <meta property="og:site_name" content="Knight Web Studio">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/img/logo.svg">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="preconnect" href="https://js.hcaptcha.com" crossorigin>
-<link rel="dns-prefetch" href="https://js.hcaptcha.com">
-<script>document.documentElement.classList.add('js');</script>
+<script>
+  // Restore the saved theme before first paint, so a light-theme visitor
+  // never sees a dark flash. main.js still owns the toggle itself.
+  (function () {
+    var d = document.documentElement; d.classList.add('js');
+    try {
+      var t = localStorage.getItem('theme');
+      if (!t && matchMedia('(prefers-color-scheme: light)').matches) t = 'light';
+      if (t) d.setAttribute('data-theme', t);
+    } catch (e) { /* private mode */ }
+  })();
+</script>
 <link rel="preload" href="/assets/fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/styles.css">
@@ -202,7 +214,7 @@
           </div>
           <div class="work-body">
             <p class="work-tag">Fintech SaaS · Product site &amp; app UI</p>
-            <h3>Corbel Books</h3>
+            <h2 class="h3">Corbel Books</h2>
             <p>
               “Bookkeeping that runs itself.” A full product site and dashboard for an
               invoicing and cash-flow tool — Stripe card payments, Plaid bank sync,
@@ -225,7 +237,7 @@
           </div>
           <div class="work-body">
             <p class="work-tag">Exterior cleaning · Local service &amp; SEO</p>
-            <h3>Smilys Softwash</h3>
+            <h2 class="h3">Smilys Softwash</h2>
             <p>
               “Don't replace it. Renew it.” Roof and house soft washing across Greater
               Baton Rouge — a service page per treatment, a before-and-after gallery,
@@ -248,7 +260,7 @@
           </div>
           <div class="work-body">
             <p class="work-tag">Gaming data · Web app</p>
-            <h3>GamersPulseHQ</h3>
+            <h2 class="h3">GamersPulseHQ</h2>
             <p>
               “Real-time gaming intelligence.” Live Steam player counts and spikes,
               Twitch viewership, game deals, esports coverage and a release calendar,
@@ -261,6 +273,7 @@
             </a>
           </div>
         </article>
+      </div>
     </div>
   </section>
 
@@ -271,17 +284,6 @@
       <a class="btn btn-light" href="/contact/">Book a discovery call</a>
     </div>
   </section>
-
-</main>
-
-<!-- Mobile-only sticky CTA: the header's "Get a quote" is hidden below 980px,
-     so without this there is no persistent way to convert on a phone. -->
-<div class="mobile-cta" id="mobile-cta" hidden>
-  <div class="mobile-cta-inner">
-    <span class="mobile-cta-text">Free 30-min call<span> · no pitch</span></span>
-    <a class="btn btn-primary btn-sm" href="/contact/">Get a quote</a>
-  </div>
-</div>
 
 </main>
 
@@ -306,7 +308,7 @@
     </div>
 
     <nav class="footer-col" aria-label="Services">
-      <h4>Services</h4>
+      <h3>Services</h3>
       <a href="/services/">Website design</a>
       <a href="/services/">E-commerce</a>
       <a href="/services/">SEO</a>
@@ -314,7 +316,7 @@
     </nav>
 
     <nav class="footer-col" aria-label="Company">
-      <h4>Company</h4>
+      <h3>Company</h3>
       <a href="/work/">Our work</a>
       <a href="/process/">Process</a>
       <a href="/pricing/">Pricing</a>
@@ -322,7 +324,7 @@
     </nav>
 
     <nav class="footer-col" aria-label="Contact">
-      <h4>Contact</h4>
+      <h3>Contact</h3>
       <a href="mailto:knightwebsitesllc@gmail.com">knightwebsitesllc@gmail.com</a>
       <a href="/contact/">Start a project</a>
     </nav>
@@ -330,7 +332,7 @@
 
   <div class="container footer-bottom">
     <p>&copy; <span id="year">2026</span> Knight Web Studio. All rights reserved.</p>
-    <p><a href="/">Back to top ↑</a></p>
+    <p class="footer-links"><a href="/privacy/">Privacy</a><a href="#top">Back to top ↑</a></p>
   </div>
 </footer>
 <script src="/assets/js/main.js" defer></script>
