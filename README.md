@@ -269,19 +269,19 @@ Current prices, set against 2026 market research:
 | Commerce | $8,000 | Configured store builds run $3,000–$10,000 |
 | Automation add-ons | $750 each | Booking/CRM integration runs $500–$3,000 |
 | Brand identity | $1,500 | Small-business packages $800–$2,500; boutique studios $5,000–$20,000 |
-| Care — Essential | $200/mo | Quality care plans band at $199–$599/mo |
-| Care — Growth | $350/mo | |
-| Care — Commerce | $600/mo | |
+| Care — Essential | $300/mo | Quality care plans band at $199–$599/mo |
+| Care — Growth | $600/mo | |
+| Care — Commerce | $1,000/mo | Store care with priority response sits above the general band |
 
 Starter was raised from $1,500 because three pages for $1,500 undercut what
 freelancers charge for one. Each price appears in `pricing/index.html`, the
 three project tiers again on the landing page, the five headline prices in
-every page's JSON-LD `OfferCatalog`, and the $200 care figure in the FAQ answer
+every page's JSON-LD `OfferCatalog`, and the $300 care figure in the FAQ answer
 about care plans and the services page. Search for the old figure before
 changing one.
 
 The service cards carry small price tags taken from the same tiers: design
-and build "$2,000 or $4,000", e-commerce $8,000, care "$200, $350 or $600/mo",
+and build "$2,000 or $4,000", e-commerce $8,000, care "$300, $600 or $1,000/mo",
 brand identity $1,500, redesigns "priced as a new site" (a redesign is one of
 the same packages), and SEO "in every build", because every tier includes SEO
 basics.
