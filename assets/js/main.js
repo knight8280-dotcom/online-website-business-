@@ -369,7 +369,7 @@
         'Budget: ' + f.budget.value + '\n\n' +
         f.message.value.trim()
       );
-      return 'mailto:knightwebsitesllc@gmail.com?subject=' + subject + '&body=' + body;
+      return 'mailto:knightwebstudio1@gmail.com?subject=' + subject + '&body=' + body;
     }
 
     form.addEventListener('submit', function (e) {

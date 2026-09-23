@@ -95,7 +95,7 @@ automatically, but `logo.svg` has its colours hard-coded and needs editing.
 
 ### 2. Contact details
 
-The contact address is `knightwebsitesllc@gmail.com`. It appears in every
+The contact address is `knightwebstudio1@gmail.com`. It appears in every
 page's header menu, footer and JSON-LD, in `contact/index.html` (contact
 list), `privacy/index.html`, and in `assets/js/main.js` (the form's mailto
 fallback) — a project-wide search-and-replace is the safe way to change it.
@@ -112,7 +112,7 @@ Send me real profile URLs and they go back in.
 
 The form lives in `contact/index.html` and posts to
 [Web3Forms](https://web3forms.com), which relays submissions to
-`knightwebsitesllc@gmail.com`. Three hidden inputs configure it:
+`knightwebstudio1@gmail.com`. Three hidden inputs configure it:
 
 ```html
 <input type="hidden" name="access_key" value="…">
@@ -122,6 +122,14 @@ The form lives in `contact/index.html` and posts to
 
 The access key is **public by design** — it sits in the page source, which is
 how a static site receives mail without a server. It is not a credential.
+
+> **The key decides where mail goes, not the address shown on the site.**
+> Web3Forms issues each key to one inbox. The current key was issued to the
+> old address, `knightwebsitesllc@gmail.com`, so enquiries still land there
+> until it is replaced. To move them to `knightwebstudio1@gmail.com`, create a
+> key for that address at [web3forms.com](https://web3forms.com), paste it into
+> the `access_key` input in `contact/index.html`, switch hCaptcha on for the new
+> key in the Web3Forms dashboard, and send one test enquiry from the live site.
 
 **Spam protection**, in three layers:
 
