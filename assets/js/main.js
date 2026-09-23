@@ -72,7 +72,12 @@
     var svg = link.querySelector('.crest');
     if (svg) link.addEventListener('mouseenter', function () { playCrest(svg); });
   });
-  var fullCrest = document.querySelector('.crest-full');
+  // A crest that arrives with .play (the landing hero) builds on load; only
+  // one without it waits to scroll into view.
+  document.querySelectorAll('.crest-full.play').forEach(function (svg) {
+    svg.addEventListener('mouseenter', function () { playCrest(svg); });
+  });
+  var fullCrest = document.querySelector('.crest-full:not(.play)');
   if (fullCrest && 'IntersectionObserver' in window && !reduceMotion) {
     var crestObs = new IntersectionObserver(function (entries) {
       if (entries[0].isIntersecting) { playCrest(fullCrest); crestObs.disconnect(); }

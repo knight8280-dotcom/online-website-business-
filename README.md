@@ -6,7 +6,7 @@ npm install**. Open `index.html` and it works.
 
 ## Pages
 
-A landing page plus seven pages, each with its own title, description, canonical
+A home page plus eight pages, each with its own title, description, canonical
 URL and Open Graph tags. The menu reaches the first six; privacy is linked from
 the footer.
 
@@ -20,6 +20,7 @@ the footer.
 | `/faq/` | Nine answers, with FAQPage schema |
 | `/contact/` | Enquiry form, spam honeypot, saved drafts, "what happens next" |
 | `/privacy/` | Plain-English privacy notice — see [Privacy page](#7-privacy-page) |
+| `/start/` | Landing page for ads, emails and posts: every service with its price, pricing tiers, live work, the four steps, one call to action. No menu. See [Landing page](#8-landing-page-start) |
 
 Every page also carries the header, footer and (except `/contact/` and
 `/privacy/`) the sticky mobile CTA — the header's "Get a quote" is hidden
@@ -358,6 +359,24 @@ theme and draft in local storage, GitHub Pages hosting, and **no analytics**.
 It is not legal advice. Read it once, and update it if you add analytics, a
 newsletter, or any other tool that touches visitor data — the analytics
 section promises the page will name the tool.
+
+### 8. Landing page (`/start/`)
+
+`/start/` is the page to send people to from outside the site: Facebook
+posts, cold emails, ads, your email signature. It gives the whole offer on
+one page, every service with its starting price, and has one next step:
+book the free call. It deliberately has **no menu**, so visitors aren't
+pulled away from that step; a "Full website" link sits in its footer.
+
+Tag each link so Plausible shows which channel sends enquiries:
+
+```
+https://knightwebstudio.com/start/?utm_source=facebook
+https://knightwebstudio.com/start/?utm_source=email&utm_campaign=softwash
+```
+
+Its service list and prices are copies of the Services and Pricing pages.
+Change a price there and change it here too.
 
 ## Run it locally
 
