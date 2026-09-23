@@ -52,13 +52,19 @@
       "name": "Knight Web Studio",
       "description": "Web design and development studio building fast, modern websites for small businesses.",
       "url": "https://knightwebstudio.com/",
-      "email": "knightwebsitesllc@gmail.com",
+      "email": "knightwebstudio1@gmail.com",
       "logo": {
         "@type": "ImageObject",
         "url": "https://knightwebstudio.com/assets/img/logo.svg"
       },
       "image": "https://knightwebstudio.com/assets/img/og-image.png",
       "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Baton Rouge",
+        "addressRegion": "LA",
+        "addressCountry": "US"
+      },
       "areaServed": "Worldwide",
       "knowsAbout": [
         "Web design",
@@ -169,7 +175,7 @@
         <!-- Overlay-only footer: on desktop this is hidden -->
         <div class="nav-foot">
           <a class="btn btn-primary btn-block" href="/contact/">Start your project</a>
-          <a class="nav-mail" href="mailto:knightwebsitesllc@gmail.com">knightwebsitesllc@gmail.com</a>
+          <a class="nav-mail" href="mailto:knightwebstudio1@gmail.com">knightwebstudio1@gmail.com</a>
         </div>
       </div>
     </nav>
@@ -222,7 +228,13 @@
         <p>Nothing in local storage is transmitted anywhere, and clearing your browser data removes it.</p>
 
         <h2>Analytics and cookies</h2>
-        <p>There is no analytics script, no advertising pixel and no tracking cookie on this site. If that changes, this page will say so and name the tool.</p>
+        <!-- Matches SITE_CONFIG.analyticsScript in main.js. If analytics is switched off, go back to:
+             "There is no analytics script, no advertising pixel and no tracking cookie on this site." -->
+        <p>We use <a href="https://plausible.io/data-policy" target="_blank" rel="noopener">Plausible Analytics</a> to count visits, see which pages people read, and know when an enquiry is sent or a call is booked. It sets no cookies, stores no personal data and does not follow you across other sites. There is no advertising pixel and no tracking cookie on this site.</p>
+
+        <!-- Matches SITE_CONFIG.bookingUrl in main.js. Remove if booking is switched off. -->
+        <h2>Booking a call</h2>
+        <p>The "Book a call" buttons open <a href="https://calendly.com/privacy" target="_blank" rel="noopener">Calendly</a>, a scheduling service, in a new tab. If you book, Calendly receives the name, email and any notes you enter, under its own privacy policy, and it may set its own cookies on its page. We use those details only to hold the call.</p>
 
         <h2>Hosting</h2>
         <p>The site is served by <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub Pages</a>. Like any web host, GitHub may log the IP address of visitors for security and operational reasons under its own privacy statement. We do not have access to those logs.</p>
@@ -231,7 +243,7 @@
         <p>Our work pages link to client sites we built. Each of those has its own privacy practices, and this page doesn't cover them.</p>
 
         <h2>Questions</h2>
-        <p>Email <a href="mailto:knightwebsitesllc@gmail.com">knightwebsitesllc@gmail.com</a> and a person will answer.</p>
+        <p>Email <a href="mailto:knightwebstudio1@gmail.com">knightwebstudio1@gmail.com</a> and a person will answer.</p>
       </div>
     </div>
   </section>
@@ -248,6 +260,8 @@
         <span class="brand-name">Knight Web Studio</span>
       </a>
       <p>Fast, modern websites for businesses that need to be found and trusted.</p>
+      <!-- EDIT ME: location. Also in the JSON-LD address and on the contact page. -->
+      <p class="footer-loc">Based in Baton Rouge, Louisiana. Working with clients anywhere.</p>
     </div>
 
     <nav class="footer-col" aria-label="Services">
@@ -268,7 +282,7 @@
 
     <nav class="footer-col" aria-label="Contact">
       <h3>Contact</h3>
-      <a href="mailto:knightwebsitesllc@gmail.com">knightwebsitesllc@gmail.com</a>
+      <a href="mailto:knightwebstudio1@gmail.com">knightwebstudio1@gmail.com</a>
       <a href="/contact/">Start a project</a>
     </nav>
   </div>

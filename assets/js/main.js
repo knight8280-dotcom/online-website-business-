@@ -5,6 +5,56 @@
 (function () {
   'use strict';
 
+  /* ---------- Site settings — EDIT ME ----------
+     Both are off while empty, so nothing half-configured ever ships.
+
+     bookingUrl      Your public scheduling link (Cal.com, Calendly…). When
+                     set, every "Book a discovery call" button opens it, and
+                     the contact page shows a "Book a 30-minute call" option
+                     beside the form. Empty: those buttons go to /contact/.
+     analyticsScript The script URL from Plausible's install snippet (Site
+                     settings → Site installation; it looks like
+                     https://plausible.io/js/pa-XXXX.js). When set, loads
+                     Plausible's cookieless tracking and records an "Enquiry"
+                     goal on each sent form and a "Book call" goal on each
+                     booking click. Create both as custom-event goals in the
+                     Plausible dashboard. Keep the analytics paragraph on
+                     /privacy/ in step with this setting. */
+  var SITE_CONFIG = {
+    bookingUrl: 'https://calendly.com/knightwebstudio1/30min',
+    analyticsScript: 'https://plausible.io/js/pa-M8H39gIN2J-TgmR4OOcVA.js'
+  };
+
+  function track(goal) {
+    if (typeof window.plausible === 'function') window.plausible(goal);
+  }
+
+  if (SITE_CONFIG.analyticsScript) {
+    // Plausible's own install snippet, unchanged: a queue stub so events
+    // fired before the script arrives are kept, then init().
+    window.plausible = window.plausible || function () {
+      (window.plausible.q = window.plausible.q || []).push(arguments);
+    };
+    window.plausible.init = window.plausible.init || function (i) {
+      window.plausible.o = i || {};
+    };
+    window.plausible.init();
+    var pa = document.createElement('script');
+    pa.async = true;
+    pa.src = SITE_CONFIG.analyticsScript;
+    document.head.appendChild(pa);
+  }
+
+  if (SITE_CONFIG.bookingUrl) {
+    document.querySelectorAll('[data-booking]').forEach(function (a) {
+      a.href = SITE_CONFIG.bookingUrl;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.addEventListener('click', function () { track('Book call'); });
+    });
+    document.querySelectorAll('.booking-only').forEach(function (el) { el.hidden = false; });
+  }
+
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- Theme toggle (remembers the choice) ---------- */
@@ -325,7 +375,7 @@
         'Budget: ' + f.budget.value + '\n\n' +
         f.message.value.trim()
       );
-      return 'mailto:knightwebsitesllc@gmail.com?subject=' + subject + '&body=' + body;
+      return 'mailto:knightwebstudio1@gmail.com?subject=' + subject + '&body=' + body;
     }
 
     form.addEventListener('submit', function (e) {
@@ -375,6 +425,7 @@
               }
               form.reset();
               clearDraft();
+              track('Enquiry');
               setStatus('Thanks — your enquiry is in. We’ll reply within one business day.', 'ok');
             });
         })

@@ -17,7 +17,7 @@ the footer.
 | `/work/` | Three live projects as full case-study rows |
 | `/process/` | Four-step "no surprises" explainer |
 | `/pricing/` | Three project tiers, automation add-ons, three care tiers |
-| `/faq/` | Eight answers, with FAQPage schema |
+| `/faq/` | Nine answers, with FAQPage schema |
 | `/contact/` | Enquiry form, spam honeypot, saved drafts, "what happens next" |
 | `/privacy/` | Plain-English privacy notice — see [Privacy page](#7-privacy-page) |
 
@@ -95,7 +95,7 @@ automatically, but `logo.svg` has its colours hard-coded and needs editing.
 
 ### 2. Contact details
 
-The contact address is `knightwebsitesllc@gmail.com`. It appears in every
+The contact address is `knightwebstudio1@gmail.com`. It appears in every
 page's header menu, footer and JSON-LD, in `contact/index.html` (contact
 list), `privacy/index.html`, and in `assets/js/main.js` (the form's mailto
 fallback) — a project-wide search-and-replace is the safe way to change it.
@@ -111,8 +111,9 @@ Send me real profile URLs and they go back in.
 ### 3. The contact form
 
 The form lives in `contact/index.html` and posts to
-[Web3Forms](https://web3forms.com), which relays submissions to
-`knightwebsitesllc@gmail.com`. Three hidden inputs configure it:
+[Web3Forms](https://web3forms.com), which relays submissions to the inbox
+its access key was issued to (see the note below). Three hidden inputs
+configure it:
 
 ```html
 <input type="hidden" name="access_key" value="…">
@@ -122,6 +123,14 @@ The form lives in `contact/index.html` and posts to
 
 The access key is **public by design** — it sits in the page source, which is
 how a static site receives mail without a server. It is not a credential.
+
+> **The key decides where mail goes, not the address shown on the site.**
+> Web3Forms issues each key to one inbox. The current key was issued to the
+> old address, `knightwebsitesllc@gmail.com`, so enquiries still land there
+> until it is replaced. To move them to `knightwebstudio1@gmail.com`, create a
+> key for that address at [web3forms.com](https://web3forms.com), paste it into
+> the `access_key` input in `contact/index.html`, switch hCaptcha on for the new
+> key in the Web3Forms dashboard, and send one test enquiry from the live site.
 
 **Spam protection**, in three layers:
 
@@ -247,6 +256,62 @@ link on LinkedIn, WhatsApp or Slack. It carries the logo, the headline and the
 domain. To regenerate it after a copy or brand change, rebuild it from the same
 markup used to produce it and re-export at 1200×630.
 
+### 6b. Booking link and analytics
+
+Both are set in one settings block at the top of `assets/js/main.js`. Both
+are on; an empty string switches either off:
+
+```js
+var SITE_CONFIG = {
+  bookingUrl: 'https://calendly.com/knightwebstudio1/30min',
+  analyticsScript: 'https://plausible.io/js/pa-M8H39gIN2J-TgmR4OOcVA.js'
+};
+```
+
+- **bookingUrl** — every "Book a discovery call" button (they carry
+  `data-booking`) opens this link in a new tab, and the contact page reveals a
+  "Book a 30-minute call" box beside the form. Empty, the buttons go to
+  `/contact/` and the box stays hidden.
+- **analyticsScript** — the script URL from Plausible's install snippet
+  (Site settings → Site installation). `main.js` runs that snippet for you on
+  every page, so there is nothing to paste into the HTML. It counts visits
+  without cookies (no consent banner needed) and fires two goals: `Enquiry`
+  when the form sends and `Book call` when someone clicks a booking button.
+  **Add both as custom-event goals in the Plausible dashboard**, or they won't
+  show. The 404 page doesn't load `main.js`, so it isn't counted.
+
+`/privacy/` names both Calendly and Plausible. If you switch either off, edit
+its section there too; the wording to go back to sits in a comment beside it.
+Tag every link you post elsewhere with `?utm_source=facebook` (or `linkedin`,
+`email`, …) so Plausible shows which channel each enquiry came from.
+
+### 6c. Location
+
+The site says **Based in Baton Rouge, Louisiana**, which lets it appear in
+local search and matches the address in the JSON-LD. It appears in every
+page's footer, the contact page's contact list, and every page's JSON-LD
+`address`. If that ever changes, search for `Baton Rouge` across the project.
+
+### 6d. Testimonials
+
+The landing page has a testimonials section written and styled but commented
+out, directly under the work section in `index.html`. It stays off until
+there are real quotes: an invented or placeholder quote costs more trust than
+no section at all. To switch it on, delete the two lines
+`<!-- TESTIMONIALS-START` and `TESTIMONIALS-END -->`, then fill in each quote,
+name and role.
+
+A message that works for asking a client, and gets you a Google review in
+the same ask:
+
+> Hi [name], hope the site's treating you well. Could I ask a small favour?
+> I'm collecting a couple of sentences from clients for my own site. What
+> was it like working together, and has anything changed since launch?
+> If you're happy to, I'd also be grateful for a Google review here: [link].
+> Totally fine if not.
+
+Paste their reply in their words. Ask before shortening it.
+
 ### 7. Privacy page
 
 `/privacy/` is a plain-English notice written to match what the site actually
@@ -329,7 +394,7 @@ Every page carries a JSON-LD `@graph` with two nodes:
 - **WebSite**
 
 Each sub-page adds a **BreadcrumbList**, and `faq/index.html` adds a
-**FAQPage** with all eight entries.
+**FAQPage** with all nine entries.
 
 > The FAQ markup mirrors the visible accordion **verbatim**. Google penalises
 > structured data that does not match on-page content, so if you edit an FAQ

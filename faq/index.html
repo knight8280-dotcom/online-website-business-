@@ -52,13 +52,19 @@
       "name": "Knight Web Studio",
       "description": "Web design and development studio building fast, modern websites for small businesses.",
       "url": "https://knightwebstudio.com/",
-      "email": "knightwebsitesllc@gmail.com",
+      "email": "knightwebstudio1@gmail.com",
       "logo": {
         "@type": "ImageObject",
         "url": "https://knightwebstudio.com/assets/img/logo.svg"
       },
       "image": "https://knightwebstudio.com/assets/img/og-image.png",
       "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Baton Rouge",
+        "addressRegion": "LA",
+        "addressCountry": "US"
+      },
       "areaServed": "Worldwide",
       "knowsAbout": [
         "Web design",
@@ -189,6 +195,14 @@
     },
     {
       "@type": "Question",
+      "name": "Why not just use Wix or Squarespace?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For some businesses, you should. If you need a simple page, have the time to keep it current, and don't rely on search to bring in customers, a website builder is good value. Where builders tend to fall short is page speed, how well you show up in local search, and the small details that turn a visitor into an enquiry. And when something breaks, there's no one who knows your site. We build for businesses where the website has to bring in work. If a builder is the better fit for you, we'll say so on the call."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "What about hosting and the domain?",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -242,7 +256,7 @@
         <!-- Overlay-only footer: on desktop this is hidden -->
         <div class="nav-foot">
           <a class="btn btn-primary btn-block" href="/contact/">Start your project</a>
-          <a class="nav-mail" href="mailto:knightwebsitesllc@gmail.com">knightwebsitesllc@gmail.com</a>
+          <a class="nav-mail" href="mailto:knightwebstudio1@gmail.com">knightwebstudio1@gmail.com</a>
         </div>
       </div>
     </nav>
@@ -299,6 +313,10 @@
           <div class="faq-body"><p>No — you can take the site and host it wherever you like. Most clients stay on a plan because hosting, security updates, backups, monitoring and monthly content edits bundled from $200 works out cheaper than paying for those separately and calling someone hourly when something breaks. There are three tiers so a brochure site isn't subsidising a busy store. Plans are month-to-month and you can stop any time.</p></div>
         </details>
         <details class="faq-item reveal">
+          <summary>Why not just use Wix or Squarespace?</summary>
+          <div class="faq-body"><p>For some businesses, you should. If you need a simple page, have the time to keep it current, and don't rely on search to bring in customers, a website builder is good value. Where builders tend to fall short is page speed, how well you show up in local search, and the small details that turn a visitor into an enquiry. And when something breaks, there's no one who knows your site. We build for businesses where the website has to bring in work. If a builder is the better fit for you, we'll say so on the call.</p></div>
+        </details>
+        <details class="faq-item reveal">
           <summary>What about hosting and the domain?</summary>
           <div class="faq-body"><p>We can set both up and bill them through a care plan, or point everything at accounts you own and hand you the keys. Either way we handle the technical setup, SSL and email records.</p></div>
         </details>
@@ -318,7 +336,7 @@
     <div class="container cta-inner reveal">
       <h2>Still deciding? Book the free call.</h2>
       <p>Thirty minutes, no pitch. You'll get a clear view of what your site needs and what it should cost — even if you build it yourself.</p>
-      <a class="btn btn-light" href="/contact/">Book a discovery call</a>
+      <a class="btn btn-light" href="/contact/" data-booking>Book a discovery call</a>
     </div>
   </section>
 
@@ -342,6 +360,8 @@
         <span class="brand-name">Knight Web Studio</span>
       </a>
       <p>Fast, modern websites for businesses that need to be found and trusted.</p>
+      <!-- EDIT ME: location. Also in the JSON-LD address and on the contact page. -->
+      <p class="footer-loc">Based in Baton Rouge, Louisiana. Working with clients anywhere.</p>
     </div>
 
     <nav class="footer-col" aria-label="Services">
@@ -362,7 +382,7 @@
 
     <nav class="footer-col" aria-label="Contact">
       <h3>Contact</h3>
-      <a href="mailto:knightwebsitesllc@gmail.com">knightwebsitesllc@gmail.com</a>
+      <a href="mailto:knightwebstudio1@gmail.com">knightwebstudio1@gmail.com</a>
       <a href="/contact/">Start a project</a>
     </nav>
   </div>
