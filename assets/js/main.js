@@ -57,6 +57,32 @@
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ---------- Crest animations ----------
+     The header crest builds itself on a visit's first page (the inline head
+     script sets .crest-intro). After that, hovering a crest replays it, and
+     the full crest builds when it scrolls into view. */
+  function playCrest(svg) {
+    if (!svg || reduceMotion) return;
+    document.documentElement.classList.remove('crest-intro');
+    svg.classList.remove('play');
+    void svg.getBoundingClientRect();   // restart the animation
+    svg.classList.add('play');
+  }
+  document.querySelectorAll('.brand').forEach(function (link) {
+    var svg = link.querySelector('.crest');
+    if (svg) link.addEventListener('mouseenter', function () { playCrest(svg); });
+  });
+  var fullCrest = document.querySelector('.crest-full');
+  if (fullCrest && 'IntersectionObserver' in window && !reduceMotion) {
+    var crestObs = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) { playCrest(fullCrest); crestObs.disconnect(); }
+    }, { threshold: 0.3 });
+    // Hidden until it builds, so it never shows finished and then blinks out
+    fullCrest.classList.add('crest-wait');
+    crestObs.observe(fullCrest);
+    fullCrest.addEventListener('mouseenter', function () { playCrest(fullCrest); });
+  }
+
   /* ---------- Theme toggle (remembers the choice) ---------- */
   var root = document.documentElement;
   var themeToggle = document.getElementById('theme-toggle');

@@ -78,26 +78,43 @@ will flag skipped heading levels.
 
 Everything you need to change is marked `EDIT ME` in the source.
 
-### 1. Business name and logo
+### 1. Business name, crest and artwork
 
-The wordmark reads **Knight Web Studio** in full, in one weight and one colour,
-in the header and footer — search for `brand-name` and edit both occurrences.
+The wordmark reads **Knight Web Studio** in full, in the header and footer —
+search for `brand-name` and edit both occurrences.
 
-The logo is a shield containing a K: *knight* for the name, and protection for
-the care plans. It lives in three places:
+The mark is the **Charger shield**: a chess knight's head cut into facets in
+five shades of the brand blue, inside a riveted shield with a teal inner
+border. The **full crest** adds crossed swords and a name ribbon for large
+spots. Around them, the site uses a chess-set theme: every sub-page opens with
+its own faceted piece, and loose facets ("shards") drift behind page headers.
 
-- inline SVG in the header and footer, themed through `--brand` (shield) and
-  `--on-brand` (the K), so it inverts correctly in light and dark
-- `assets/img/logo.svg` — standalone, the favicon for modern browsers
-- `favicon.ico`, `assets/img/apple-touch-icon.png` (iPhone home screen) and
-  `assets/img/icon-192.png` / `icon-512.png` (Android and app installs) —
-  rendered from `logo.svg`; the PNGs sit on the dark background with the
-  shield inside the middle 60%, so Android can crop them to a circle
-- baked into `assets/img/og-image.png`
+| Where | What |
+| --- | --- |
+| Header, every page | Charger shield; builds itself on a visit's first page, then again on hover |
+| Footer | Charger shield |
+| Home, closing call to action | Full crest; builds when it scrolls into view |
+| Services / Work / Process / Pricing / FAQ / Contact | Rook / Knight / Pawn / King / Bishop / Queen, stacked in on load; hover makes it hop (the knight makes a knight's move) |
+| Hero and page headers | Drifting shards |
+| 404 | The knight, toppled over |
+| `assets/img/logo.svg`, `crest.svg` | Standalone copies (logo.svg is the JSON-LD logo) |
+| `favicon.ico`, `apple-touch-icon.png`, `icon-192/512.png`, `og-image.png` | Rendered from the same artwork |
 
-It stays legible down to 16px. If you change `--brand`, the inline mark follows
-automatically, but `logo.svg` has its colours hard-coded and needs editing, and
-the PNG icons and `favicon.ico` need re-rendering from it.
+**All of it is drawn in code, in `tools/art/`.** The drawings live in
+`tools/art/emblems.py`. The pages carry them inline (so they can animate)
+between `<!-- art:NAME -->` markers, which are overwritten on every build —
+never edit between them. To change any artwork:
+
+```bash
+python3 tools/art/build.py   # rewrites the inline art in every page, logo.svg and crest.svg
+node tools/art/render.js     # re-renders favicon, app icons and the link-preview image (needs Playwright)
+```
+
+The crest keeps fixed colours (the `PALETTE` in `emblems.py`), so it looks the
+same on the dark and light themes, like a printed badge. The animations live at
+the end of `assets/css/styles.css` under "Artwork"; every drawing rests in its
+finished state, so a visitor with reduced motion, or a crawler, sees the
+complete artwork.
 
 ### 2. Contact details
 
