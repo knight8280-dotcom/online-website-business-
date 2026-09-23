@@ -12,30 +12,36 @@
                      set, every "Book a discovery call" button opens it, and
                      the contact page shows a "Book a 30-minute call" option
                      beside the form. Empty: those buttons go to /contact/.
-     analyticsDomain The domain as registered in Plausible. When set, loads
-                     Plausible's cookieless script and records an "Enquiry"
+     analyticsScript The script URL from Plausible's install snippet (Site
+                     settings → Site installation; it looks like
+                     https://plausible.io/js/pa-XXXX.js). When set, loads
+                     Plausible's cookieless tracking and records an "Enquiry"
                      goal on each sent form and a "Book call" goal on each
-                     booking click. Create both goals in the Plausible
-                     dashboard, and update the analytics paragraph on
-                     /privacy/ before switching this on. */
+                     booking click. Create both as custom-event goals in the
+                     Plausible dashboard. Keep the analytics paragraph on
+                     /privacy/ in step with this setting. */
   var SITE_CONFIG = {
     bookingUrl: 'https://calendly.com/knightwebstudio1/30min',
-    analyticsDomain: ''
+    analyticsScript: 'https://plausible.io/js/pa-M8H39gIN2J-TgmR4OOcVA.js'
   };
 
   function track(goal) {
     if (typeof window.plausible === 'function') window.plausible(goal);
   }
 
-  if (SITE_CONFIG.analyticsDomain) {
-    // Queue stub, so events fired before the script arrives are not lost
+  if (SITE_CONFIG.analyticsScript) {
+    // Plausible's own install snippet, unchanged: a queue stub so events
+    // fired before the script arrives are kept, then init().
     window.plausible = window.plausible || function () {
       (window.plausible.q = window.plausible.q || []).push(arguments);
     };
+    window.plausible.init = window.plausible.init || function (i) {
+      window.plausible.o = i || {};
+    };
+    window.plausible.init();
     var pa = document.createElement('script');
-    pa.defer = true;
-    pa.setAttribute('data-domain', SITE_CONFIG.analyticsDomain);
-    pa.src = 'https://plausible.io/js/script.js';
+    pa.async = true;
+    pa.src = SITE_CONFIG.analyticsScript;
     document.head.appendChild(pa);
   }
 

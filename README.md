@@ -258,27 +258,30 @@ markup used to produce it and re-export at 1200×630.
 
 ### 6b. Booking link and analytics
 
-Both are switched on from one settings block at the top of
-`assets/js/main.js`, and both do nothing while empty:
+Both are set in one settings block at the top of `assets/js/main.js`. Both
+are on; an empty string switches either off:
 
 ```js
 var SITE_CONFIG = {
   bookingUrl: 'https://calendly.com/knightwebstudio1/30min',
-  analyticsDomain: ''    // e.g. 'knightwebstudio.com', as registered in Plausible
+  analyticsScript: 'https://plausible.io/js/pa-M8H39gIN2J-TgmR4OOcVA.js'
 };
 ```
 
 - **bookingUrl** — every "Book a discovery call" button (they carry
   `data-booking`) opens this link in a new tab, and the contact page reveals a
   "Book a 30-minute call" box beside the form. Empty, the buttons go to
-  `/contact/` and the box stays hidden. Cal.com's free plan is enough.
-- **analyticsDomain** — loads Plausible's cookieless script (about $9/month,
-  no consent banner needed) and fires two goals: `Enquiry` when the form sends
-  and `Book call` when someone clicks a booking button. Add both as custom
-  event goals in the Plausible dashboard, or they won't show.
+  `/contact/` and the box stays hidden.
+- **analyticsScript** — the script URL from Plausible's install snippet
+  (Site settings → Site installation). `main.js` runs that snippet for you on
+  every page, so there is nothing to paste into the HTML. It counts visits
+  without cookies (no consent banner needed) and fires two goals: `Enquiry`
+  when the form sends and `Book call` when someone clicks a booking button.
+  **Add both as custom-event goals in the Plausible dashboard**, or they won't
+  show. The 404 page doesn't load `main.js`, so it isn't counted.
 
-Before switching either on, update `/privacy/`: the replacement wording for
-both is already written in an HTML comment beside the analytics paragraph.
+`/privacy/` names both Calendly and Plausible. If you switch either off, edit
+its section there too; the wording to go back to sits in a comment beside it.
 Tag every link you post elsewhere with `?utm_source=facebook` (or `linkedin`,
 `email`, …) so Plausible shows which channel each enquiry came from.
 
