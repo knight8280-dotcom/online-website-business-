@@ -59,6 +59,12 @@
       },
       "image": "https://knightwebstudio.com/assets/img/og-image.png",
       "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Baton Rouge",
+        "addressRegion": "LA",
+        "addressCountry": "US"
+      },
       "areaServed": "Worldwide",
       "knowsAbout": [
         "Web design",
@@ -281,7 +287,7 @@
     <div class="container cta-inner reveal">
       <h2>Still deciding? Book the free call.</h2>
       <p>Thirty minutes, no pitch. You'll get a clear view of what your site needs and what it should cost — even if you build it yourself.</p>
-      <a class="btn btn-light" href="/contact/">Book a discovery call</a>
+      <a class="btn btn-light" href="/contact/" data-booking>Book a discovery call</a>
     </div>
   </section>
 
@@ -305,6 +311,8 @@
         <span class="brand-name">Knight Web Studio</span>
       </a>
       <p>Fast, modern websites for businesses that need to be found and trusted.</p>
+      <!-- EDIT ME: location. Also in the JSON-LD address and on the contact page. -->
+      <p class="footer-loc">Based in Baton Rouge, Louisiana. Working with clients anywhere.</p>
     </div>
 
     <nav class="footer-col" aria-label="Services">

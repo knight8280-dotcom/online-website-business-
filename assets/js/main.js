@@ -5,6 +5,50 @@
 (function () {
   'use strict';
 
+  /* ---------- Site settings — EDIT ME ----------
+     Both are off while empty, so nothing half-configured ever ships.
+
+     bookingUrl      Your public scheduling link (Cal.com, Calendly…). When
+                     set, every "Book a discovery call" button opens it, and
+                     the contact page shows a "Book a 30-minute call" option
+                     beside the form. Empty: those buttons go to /contact/.
+     analyticsDomain The domain as registered in Plausible. When set, loads
+                     Plausible's cookieless script and records an "Enquiry"
+                     goal on each sent form and a "Book call" goal on each
+                     booking click. Create both goals in the Plausible
+                     dashboard, and update the analytics paragraph on
+                     /privacy/ before switching this on. */
+  var SITE_CONFIG = {
+    bookingUrl: '',
+    analyticsDomain: ''
+  };
+
+  function track(goal) {
+    if (typeof window.plausible === 'function') window.plausible(goal);
+  }
+
+  if (SITE_CONFIG.analyticsDomain) {
+    // Queue stub, so events fired before the script arrives are not lost
+    window.plausible = window.plausible || function () {
+      (window.plausible.q = window.plausible.q || []).push(arguments);
+    };
+    var pa = document.createElement('script');
+    pa.defer = true;
+    pa.setAttribute('data-domain', SITE_CONFIG.analyticsDomain);
+    pa.src = 'https://plausible.io/js/script.js';
+    document.head.appendChild(pa);
+  }
+
+  if (SITE_CONFIG.bookingUrl) {
+    document.querySelectorAll('[data-booking]').forEach(function (a) {
+      a.href = SITE_CONFIG.bookingUrl;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.addEventListener('click', function () { track('Book call'); });
+    });
+    document.querySelectorAll('.booking-only').forEach(function (el) { el.hidden = false; });
+  }
+
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- Theme toggle (remembers the choice) ---------- */
@@ -375,6 +419,7 @@
               }
               form.reset();
               clearDraft();
+              track('Enquiry');
               setStatus('Thanks — your enquiry is in. We’ll reply within one business day.', 'ok');
             });
         })

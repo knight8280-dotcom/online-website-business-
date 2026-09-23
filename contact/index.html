@@ -61,6 +61,12 @@
       },
       "image": "https://knightwebstudio.com/assets/img/og-image.png",
       "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Baton Rouge",
+        "addressRegion": "LA",
+        "addressCountry": "US"
+      },
       "areaServed": "Worldwide",
       "knowsAbout": [
         "Web design",
@@ -214,6 +220,12 @@
             <li><strong>Then a free 30-minute call, if you want one.</strong> No pitch. You leave with a plan whether or not you hire us.</li>
           </ol>
 
+          <!-- Shown only once a booking URL is set in assets/js/main.js (SITE_CONFIG.bookingUrl). -->
+          <div class="booking-alt booking-only" hidden>
+            <p>Rather talk it through first? Skip the form and pick a time.</p>
+            <a class="btn btn-ghost" href="/contact/" data-booking>Book a 30-minute call</a>
+          </div>
+
           <ul class="contact-list">
             <!-- EDIT ME: real contact details -->
             <li>
@@ -222,7 +234,7 @@
             </li>
             <li>
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.3 7-11a7 7 0 1 0-14 0c0 5.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
-              <span>Remote — working with clients worldwide</span>
+              <span>Baton Rouge, Louisiana — working with clients anywhere</span>
             </li>
             <li>
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>
@@ -325,6 +337,8 @@
         <span class="brand-name">Knight Web Studio</span>
       </a>
       <p>Fast, modern websites for businesses that need to be found and trusted.</p>
+      <!-- EDIT ME: location. Also in the JSON-LD address and on the contact page. -->
+      <p class="footer-loc">Based in Baton Rouge, Louisiana. Working with clients anywhere.</p>
     </div>
 
     <nav class="footer-col" aria-label="Services">
