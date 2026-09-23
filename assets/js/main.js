@@ -19,7 +19,7 @@
                      dashboard, and update the analytics paragraph on
                      /privacy/ before switching this on. */
   var SITE_CONFIG = {
-    bookingUrl: '',
+    bookingUrl: 'https://calendly.com/knightwebstudio1/30min',
     analyticsDomain: ''
   };
 

@@ -111,8 +111,9 @@ Send me real profile URLs and they go back in.
 ### 3. The contact form
 
 The form lives in `contact/index.html` and posts to
-[Web3Forms](https://web3forms.com), which relays submissions to
-`knightwebstudio1@gmail.com`. Three hidden inputs configure it:
+[Web3Forms](https://web3forms.com), which relays submissions to the inbox
+its access key was issued to (see the note below). Three hidden inputs
+configure it:
 
 ```html
 <input type="hidden" name="access_key" value="…">
@@ -262,7 +263,7 @@ Both are switched on from one settings block at the top of
 
 ```js
 var SITE_CONFIG = {
-  bookingUrl: '',        // e.g. 'https://cal.com/yourname/30min'
+  bookingUrl: 'https://calendly.com/knightwebstudio1/30min',
   analyticsDomain: ''    // e.g. 'knightwebstudio.com', as registered in Plausible
 };
 ```
