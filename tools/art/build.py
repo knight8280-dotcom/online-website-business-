@@ -18,12 +18,14 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent))
 import emblems as e  # noqa: E402
 
 PAGES = ['index.html', '404.html'] + [f'{d}/index.html' for d in
-                                      ('services', 'work', 'process', 'pricing', 'faq', 'contact', 'privacy')]
+                                      ('services', 'work', 'process', 'pricing', 'faq', 'contact', 'privacy', 'start')]
 
 ART = {
     'crest-header': lambda: e.charger('ch', 'crest brand-crest'),
     'crest-footer': lambda: e.charger('cf', 'crest footer-crest'),
     'full-crest':   lambda: e.full_crest('fc', 'crest-full'),
+    # landing-page hero: .play from the start, so it builds as the page opens
+    'hero-crest':   lambda: e.full_crest('hc', 'crest-full play'),
     'shards':       e.shards,
 }
 for name in ('rook', 'knight', 'pawn', 'king', 'bishop', 'queen'):
