@@ -16,7 +16,7 @@ the footer.
 | `/services/` | All six services |
 | `/work/` | Three live projects as full case-study rows |
 | `/process/` | Four-step "no surprises" explainer |
-| `/pricing/` | Three project tiers, automation add-ons, three care tiers |
+| `/pricing/` | Three project tiers, add-ons (brand identity, automation), three care tiers |
 | `/faq/` | Nine answers, with FAQPage schema |
 | `/contact/` | Enquiry form, spam honeypot, saved drafts, "what happens next" |
 | `/privacy/` | Plain-English privacy notice — see [Privacy page](#7-privacy-page) |
@@ -263,13 +263,14 @@ Current prices, set against 2026 market research:
 | Business | from $4,000 | Most professional builds land $3,000–$15,000 |
 | Commerce | from $8,000 | Configured store builds run $3,000–$10,000 |
 | Automation add-ons | from $750 | Booking/CRM integration runs $500–$3,000 |
+| Brand identity | from $1,500 | Small-business packages $800–$2,500; boutique studios $5,000–$20,000 |
 | Care — Essential | $200/mo | Quality care plans band at $199–$599/mo |
 | Care — Growth | $350/mo | |
 | Care — Commerce | $600/mo | |
 
 Starter was raised from $1,500 because three pages for $1,500 undercut what
 freelancers charge for one. Each price appears in `pricing/index.html`, the
-three project tiers again on the landing page, the four headline prices in
+three project tiers again on the landing page, the five headline prices in
 every page's JSON-LD `OfferCatalog`, and the $200 care figure in the FAQ answer
 about care plans and the services page. Search for the old figure before
 changing one.
@@ -277,9 +278,18 @@ changing one.
 The service cards carry small price tags taken from the same tiers: design
 and build from $2,000, e-commerce from $8,000, redesigns from $2,000 (a
 redesign is quoted on the same tiers as a new site), and SEO "in every build",
-because every tier includes SEO basics. **Brand & identity has no price yet** —
-add a `<span class="card-price">` to its heading on `services/index.html` once
-you've set one.
+because every tier includes SEO basics. brand & identity from $1,500.
+
+**Why $1,500 for brand identity** (set September 2026): logo, colours, fonts,
+a guidelines document and social templates sit in the mid-market band that
+small businesses pay, $800–$2,500. Freelance logo-only work runs $200–$2,000
+and boutique studios with strategy workshops charge $5,000–$20,000
+([Knapsack Creative](https://knapsackcreative.com/blog-industry/branding-pricing-guide));
+one small studio starts at $6,000 for discovery plus a logo
+([Jessica Jones Design](https://www.jessicajonesdesign.com/brand-identity-design/brand-identity-pricing/)).
+$1,500 stays under the $2,000 Starter site and leaves room to rise once there
+is branding work to show. The price appears on the services page, the pricing
+page's add-ons, `/start/` and every page's JSON-LD `OfferCatalog`.
 
 **Keep delivery and support promises in step.** Delivery: 7–10 days for a
 Starter site, 2–4 weeks for Business, 4–6 weeks for Commerce (FAQ, pricing
