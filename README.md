@@ -42,7 +42,8 @@ work/  process/  pricing/  faq/  contact/  privacy/
 site.webmanifest        Installable-app metadata and icons
 assets/css/styles.css   All styling (design tokens at the top)
 assets/js/main.js       Theme, nav, reveals, form handling
-assets/img/             Project screenshots (work-*.jpg)
+assets/img/             Project screenshots (work-*.jpg), logo, PNG app icons
+favicon.ico             16/32/48px icon for browsers and Google results
 robots.txt              Search engine directives
 sitemap.xml             Sitemap for search engines
 .nojekyll               Tells GitHub Pages to serve the files as-is
@@ -87,11 +88,16 @@ the care plans. It lives in three places:
 
 - inline SVG in the header and footer, themed through `--brand` (shield) and
   `--on-brand` (the K), so it inverts correctly in light and dark
-- `assets/img/logo.svg` — standalone, used for the favicon and Apple touch icon
+- `assets/img/logo.svg` — standalone, the favicon for modern browsers
+- `favicon.ico`, `assets/img/apple-touch-icon.png` (iPhone home screen) and
+  `assets/img/icon-192.png` / `icon-512.png` (Android and app installs) —
+  rendered from `logo.svg`; the PNGs sit on the dark background with the
+  shield inside the middle 60%, so Android can crop them to a circle
 - baked into `assets/img/og-image.png`
 
 It stays legible down to 16px. If you change `--brand`, the inline mark follows
-automatically, but `logo.svg` has its colours hard-coded and needs editing.
+automatically, but `logo.svg` has its colours hard-coded and needs editing, and
+the PNG icons and `favicon.ico` need re-rendering from it.
 
 ### 2. Contact details
 
@@ -125,12 +131,13 @@ The access key is **public by design** — it sits in the page source, which is
 how a static site receives mail without a server. It is not a credential.
 
 > **The key decides where mail goes, not the address shown on the site.**
-> Web3Forms issues each key to one inbox. The current key was issued to the
-> old address, `knightwebsitesllc@gmail.com`, so enquiries still land there
-> until it is replaced. To move them to `knightwebstudio1@gmail.com`, create a
-> key for that address at [web3forms.com](https://web3forms.com), paste it into
-> the `access_key` input in `contact/index.html`, switch hCaptcha on for the new
-> key in the Web3Forms dashboard, and send one test enquiry from the live site.
+> Web3Forms issues each key to one inbox. The current key was issued to
+> `knightwebstudio1@gmail.com` in September 2026, replacing one tied to the old
+> `knightwebsitesllc@gmail.com` inbox. If the address ever changes again,
+> create a key for the new inbox at [web3forms.com](https://web3forms.com),
+> paste it into the `access_key` input in `contact/index.html`, switch hCaptcha
+> on for it in the Web3Forms dashboard, and send one test enquiry from the
+> live site.
 
 **Spam protection**, in three layers:
 
@@ -248,6 +255,20 @@ three project tiers again on the landing page, the four headline prices in
 every page's JSON-LD `OfferCatalog`, and the $200 care figure in the FAQ answer
 about care plans and the services page. Search for the old figure before
 changing one.
+
+The service cards carry small price tags taken from the same tiers: design
+and build from $2,000, e-commerce from $8,000, redesigns from $2,000 (a
+redesign is quoted on the same tiers as a new site), and SEO "in every build",
+because every tier includes SEO basics. **Brand & identity has no price yet** —
+add a `<span class="card-price">` to its heading on `services/index.html` once
+you've set one.
+
+**Keep delivery and support promises in step.** Delivery: 7–10 days for a
+Starter site, 2–4 weeks for Business, 4–6 weeks for Commerce (FAQ, pricing
+cards, landing hero, home meta description). Free support after launch: 30
+days on Starter, 90 on Business, six months on Commerce (pricing cards,
+process page, landing process teaser). Buyers rank speed first, so a page
+that says something different costs trust.
 
 ### 6. Social preview image
 
