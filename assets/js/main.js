@@ -342,7 +342,7 @@
        phone call or an accidental back button. Cleared on a successful send.
        Kept to this device: nothing is transmitted anywhere. */
     var DRAFT_KEY = 'kws-enquiry-draft';
-    var draftFields = ['name', 'email', 'company', 'budget', 'message'];
+    var draftFields = ['name', 'email', 'company', 'package', 'message'];
 
     function saveDraft() {
       try {
@@ -371,6 +371,13 @@
       } catch (e) { /* ignore malformed or unavailable storage */ }
     }
     restoreDraft();
+
+    // /contact/?package=business (the pricing page's buttons) picks the package
+    try {
+      var chosen = new URLSearchParams(location.search).get('package');
+      var pkg = form.elements['package'];
+      if (chosen && pkg && pkg.querySelector('option[value="' + CSS.escape(chosen) + '"]')) pkg.value = chosen;
+    } catch (e) { /* old browser: the visitor picks it themselves */ }
 
     var draftTimer = null;
     form.addEventListener('input', function () {
@@ -403,7 +410,7 @@
         'Name: ' + f.name.value.trim() + '\n' +
         'Email: ' + f.email.value.trim() + '\n' +
         'Business: ' + f.company.value.trim() + '\n' +
-        'Budget: ' + f.budget.value + '\n\n' +
+        'Package: ' + (f['package'].selectedOptions[0] || {}).text + '\n\n' +
         f.message.value.trim()
       );
       return 'mailto:knightwebstudio1@gmail.com?subject=' + subject + '&body=' + body;

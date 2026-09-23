@@ -255,15 +255,20 @@ no result line.
 
 ### 5b. Pricing
 
+**Every price is fixed. Never write a range, "from", "starting at" or
+"ballpark"** anywhere on the site: a range invites the buyer to pick their
+own number. A package's price covers exactly what its card lists; anything
+beyond that is agreed in writing before work starts.
+
 Current prices, set against 2026 market research:
 
 | Item | Price | Market position |
 | --- | --- | --- |
-| Starter | from $2,000 | Freelancers charge $300–$3,500 *per page* |
-| Business | from $4,000 | Most professional builds land $3,000–$15,000 |
-| Commerce | from $8,000 | Configured store builds run $3,000–$10,000 |
-| Automation add-ons | from $750 | Booking/CRM integration runs $500–$3,000 |
-| Brand identity | from $1,500 | Small-business packages $800–$2,500; boutique studios $5,000–$20,000 |
+| Starter | $2,000 | Freelancers charge $300–$3,500 *per page* |
+| Business | $4,000 | Most professional builds land $3,000–$15,000 |
+| Commerce | $8,000 | Configured store builds run $3,000–$10,000 |
+| Automation add-ons | $750 each | Booking/CRM integration runs $500–$3,000 |
+| Brand identity | $1,500 | Small-business packages $800–$2,500; boutique studios $5,000–$20,000 |
 | Care — Essential | $200/mo | Quality care plans band at $199–$599/mo |
 | Care — Growth | $350/mo | |
 | Care — Commerce | $600/mo | |
@@ -276,9 +281,16 @@ about care plans and the services page. Search for the old figure before
 changing one.
 
 The service cards carry small price tags taken from the same tiers: design
-and build from $2,000, e-commerce from $8,000, redesigns from $2,000 (a
-redesign is quoted on the same tiers as a new site), and SEO "in every build",
-because every tier includes SEO basics. brand & identity from $1,500.
+and build "$2,000 or $4,000", e-commerce $8,000, care "$200, $350 or $600/mo",
+brand identity $1,500, redesigns "priced as a new site" (a redesign is one of
+the same packages), and SEO "in every build", because every tier includes SEO
+basics.
+
+The contact form asks for a **package**, not a budget: its dropdown lists the
+fixed prices. Each tier's button on the pricing page links to
+`/contact/?package=starter` (or `business`, `commerce`) and the form opens with
+that package chosen. The option values are `starter`, `business`, `commerce`,
+`brand` and `care`.
 
 **Why $1,500 for brand identity** (set September 2026): logo, colours, fonts,
 a guidelines document and social templates sit in the mid-market band that
@@ -287,8 +299,8 @@ and boutique studios with strategy workshops charge $5,000–$20,000
 ([Knapsack Creative](https://knapsackcreative.com/blog-industry/branding-pricing-guide));
 one small studio starts at $6,000 for discovery plus a logo
 ([Jessica Jones Design](https://www.jessicajonesdesign.com/brand-identity-design/brand-identity-pricing/)).
-$1,500 stays under the $2,000 Starter site and leaves room to rise once there
-is branding work to show. The price appears on the services page, the pricing
+$1,500 stays under the $2,000 Starter site; raise it to $2,000 once
+there are two or three branding projects to show. The price appears on the services page, the pricing
 page's add-ons, `/start/` and every page's JSON-LD `OfferCatalog`.
 
 **Keep delivery and support promises in step.** Delivery: 7–10 days for a
