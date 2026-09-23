@@ -885,9 +885,11 @@ button[disabled] { opacity: .6; cursor: not-allowed; transform: none !important;
 .more-link svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 @media (hover: hover) and (pointer: fine) { .more-link:hover { gap: .8rem; } }
 
-.mini-work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.mini-work-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
 .mini-work {
-  display: grid; gap: 0; border: 1px solid var(--border); border-radius: var(--radius-lg);
+  /* align-content: start keeps every title on one line across the row when a
+     neighbour's subtitle wraps and stretches the row taller */
+  display: grid; gap: 0; align-content: start; border: 1px solid var(--border); border-radius: var(--radius-lg);
   background: var(--surface); overflow: hidden;
   transition: border-color .25s var(--ease), box-shadow .25s var(--ease);
 }
