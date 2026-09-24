@@ -277,7 +277,9 @@ Current prices, set against 2026 market research:
 | Care — Growth | $600/mo | |
 | Care — Commerce | $1,000/mo | Store care with priority response sits above the general band |
 
-Starter was raised from $1,500 because three pages for $1,500 undercut what
+Starter is an **information website** (up to 5 pages: who the business is,
+what it offers, how to reach it), not a one-page site. It was raised from
+$1,500 because three pages for $1,500 undercut what
 freelancers charge for one. Each price appears in `pricing/index.html`, the
 three project tiers again on the landing page, the five headline prices in
 every page's JSON-LD `OfferCatalog`, and the $300 care figure in the FAQ answer
